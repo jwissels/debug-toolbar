@@ -1,0 +1,12 @@
+header {
+	padding: 10px 15px 5px;
+}
+
+#accordion {
+	margin-bottom: 0;
+}
+
+.panel-group .panel-title .list-inline {
+	margin-top: 10px;
+	margin-bottom: 0;
+}
