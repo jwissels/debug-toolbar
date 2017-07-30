@@ -30,4 +30,28 @@ class Part {
 		
 		return $featuredValues;
 	}
+	
+	public function alertValues() {
+		$alertValues = [];
+		
+		foreach ($this->values as $value) {
+			if ($value->alertLevel === null) {
+				continue;
+			}
+			
+			$alertValues[] = $value;
+		}
+		
+		return $alertValues;
+	}
+	
+	public function hasAlertValues() {
+		foreach ($this->values as $value) {
+			if ($value->alertLevel !== null) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
 }

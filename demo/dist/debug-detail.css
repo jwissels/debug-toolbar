@@ -1,12 +1,26 @@
 header {
-	padding: 10px 15px 5px;
+	padding: 10px 15px 0;
 }
 
 #accordion {
 	margin-bottom: 0;
 }
 
-.panel-group .panel-title .list-inline {
-	margin-top: 10px;
+.panel-group .panel-heading > *:last-child {
 	margin-bottom: 0;
+}
+.panel-group .panel-heading .list-inline {
+	margin-top: 10px;
+}
+
+.alert .table {
+	margin-bottom: 0;
+}
+.alert .table th {
+	font-weight: normal;
+}
+
+.alert-collapse-details {
+	padding: 10px;
+	border-top: 1px solid #DDDDDD;
 }
