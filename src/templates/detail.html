@@ -20,7 +20,7 @@
 				<div class="panel-heading" role="tab" id="part_{{key}}">
 					<h4 class="panel-title">
 						<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href=".collapse_part_{{key}}" aria-expanded="false" aria-controls="collapse_part_{{key}}">
-							{{# hasAlertValues}}<i class="fa fa-stop text-danger"></i>&nbsp;{{/ hasAlertValues}}
+							{{# hasAlertValues}}<i class="fa fa-exclamation-triangle text-danger"></i>&nbsp;{{/ hasAlertValues}}
 							{{title}}
 						</a>
 					</h4>
@@ -38,14 +38,14 @@
 				<div class="collapse_part_{{key}} panel-collapse collapse {{# hasAlertValues}}in{{/ hasAlertValues}}" role="tabpanel" aria-labelledby="part_{{key}}">
 					<table class="table panel-body">
 						{{# values}}
-							<tr class="{{# alertLevel}}text-danger{{/ alertLevel}}{{^ alertLevel}}collapse collapse_part_{{key}}_details{{/ alertLevel}}">
+							<tr class="{{^ alertLevel}}collapse collapse_part_{{key}}_details{{/ alertLevel}}">
 								<th>{{title}}</th>
 								<td>
 									{{& value}}
 									{{# alertLevel}}
 										<br>
 										<span class="text-danger">
-											<i class="fa fa-stop"></i>&nbsp;
+											<i class="fa fa-exclamation-triangle"></i>&nbsp;
 											<strong>{{alertLevel}}</strong>
 										</span>
 									{{/ alertLevel}}
