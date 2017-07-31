@@ -24,7 +24,6 @@ window.onload = function() {
 	var iframeElement = document.createElement('iframe');
 	iframeElement.src = iframeSource;
 	iframeElement.id  = 'debug-toolbar-iframe';
-	iframeContainerElement.appendChild(iframeElement);
 	
 	var toggleElement = document.createElement('div');
 	toggleElement.id = 'debug-toolbar-toggler';
@@ -68,6 +67,10 @@ window.onload = function() {
 		}
 	};
 	window.openDebugDetails = function() {
+		if (document.getElementById(iframeElement.id) == null) {
+			iframeContainerElement.appendChild(iframeElement);
+		}
+		
 		toggleElement.className = 'debug-toolbar-toggler-active';
 		iframeContainerElement.className = 'debug-toolbar-iframe-container-show';
 		toggleInnerElement.innerHTML = '&rsaquo;';
