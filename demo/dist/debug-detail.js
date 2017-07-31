@@ -1,5 +1,12 @@
 window.onload = function() {
 	/**
+	 * help tabbed navigation inside the iframe
+	 */
+	setTimeout(function() {
+		window.focus();
+	}, 100);
+	
+	/**
 	 * make accordion headings clickable, not only the link inside them
 	 */
 	var accordionTitles = document.getElementsByClassName('panel-heading');
