@@ -46,11 +46,11 @@ window.onload = function() {
 	 * - Escape:  close the toolbar
 	 */
 	window.addEventListener('keydown', function(event) {
-		if (event.shiftKey && event.keyCode == 68) {
+		if (event.ctrlKey == false && event.altKey == false && event.shiftKey && event.keyCode == 68) {
 			event.preventDefault();
 			toggleDebugDetails();
 		}
-		if (event.keyCode == 27 && toggleElement.className == 'debug-toolbar-toggler-active') {
+		if (event.ctrlKey == false && event.altKey == false && event.shiftKey == false && event.keyCode == 27 && toggleElement.className == 'debug-toolbar-toggler-active') {
 			event.preventDefault();
 			closeDebugDetails();
 		}

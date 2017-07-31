@@ -18,11 +18,11 @@ window.onload = function() {
 	 * - Escape:  close the toolbar
 	 */
 	window.addEventListener('keydown', function(event) {
-		if (event.shiftKey && event.keyCode == 68) {
+		if (event.ctrlKey == false && event.altKey == false && event.shiftKey && event.keyCode == 68) {
 			event.preventDefault();
 			top.window.closeDebugDetails();
 		}
-		if (event.keyCode == 27) {
+		if (event.ctrlKey == false && event.altKey == false && event.shiftKey == false && event.keyCode == 27) {
 			event.preventDefault();
 			top.window.closeDebugDetails();
 		}
