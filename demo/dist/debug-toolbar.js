@@ -59,7 +59,7 @@ window.onload = function() {
 	/**
 	 * open/close the iframe
 	 */
-	var toggleDebugDetails = function() {
+	window.toggleDebugDetails = function() {
 		if (toggleElement.className == 'debug-toolbar-toggler-active') {
 			closeDebugDetails();
 		}
@@ -67,12 +67,12 @@ window.onload = function() {
 			openDebugDetails();
 		}
 	};
-	var openDebugDetails = function() {
+	window.openDebugDetails = function() {
 		toggleElement.className = 'debug-toolbar-toggler-active';
 		iframeContainerElement.className = 'debug-toolbar-iframe-container-show';
 		toggleInnerElement.innerHTML = '&rsaquo;';
 	};
-	var closeDebugDetails = function() {
+	window.closeDebugDetails = function() {
 		toggleElement.className = '';
 		iframeContainerElement.className = '';
 		toggleInnerElement.innerHTML = '&lsaquo;';
