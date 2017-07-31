@@ -14,7 +14,7 @@ window.onload = function() {
 		var accordionTitle = accordionTitles[i];
 		accordionTitle.className = accordionTitle.className + ' clickable';
 		accordionTitle.addEventListener('click', function(event) {
-			var accordionLink = accordionTitle.querySelectorAll('[data-toggle="collapse"]')[0];
+			var accordionLink = this.querySelectorAll('[data-toggle="collapse"]')[0];
 			accordionLink.click();
 		});
 	}

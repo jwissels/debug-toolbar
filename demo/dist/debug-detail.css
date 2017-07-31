@@ -6,6 +6,11 @@ header {
 	margin-bottom: 0;
 }
 
+/* undo bootstrap's default */
+.panel-group .panel + .panel {
+	margin-top: -1px;
+}
+
 .panel-group .panel-heading.clickable {
 	cursor: pointer;
 }
