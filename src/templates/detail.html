@@ -38,7 +38,7 @@
 				<div class="collapse_part_{{key}} panel-collapse collapse {{# hasAlertValues}}in{{/ hasAlertValues}}" role="tabpanel" aria-labelledby="part_{{key}}">
 					<table class="table panel-body">
 						{{# values}}
-							<tr class="{{^ alertLevel}}collapse collapse_part_{{key}}_details{{/ alertLevel}}">
+							<tr class="{{# hasAlertValues}}{{^ alertLevel}}collapse collapse_part_{{key}}_details{{/ alertLevel}}{{/ hasAlertValues}}">
 								<th>{{title}}</th>
 								<td>
 									{{& value}}
