@@ -34,22 +34,49 @@ window.onload = function() {
 	toggleInnerElement.innerHTML = '&lsaquo;';
 	toggleElement.appendChild(toggleInnerElement);
 	
-	toggleElement.addEventListener('click', function(event) {
-		if (toggleElement.className == 'debug-toolbar-toggler-active') {
-			toggleElement.className = '';
-			iframeContainerElement.className = '';
-			toggleInnerElement.innerHTML = '&lsaquo;';
-		}
-		else {
-			toggleElement.className = 'debug-toolbar-toggler-active';
-			iframeContainerElement.className = 'debug-toolbar-iframe-container-show';
-			toggleInnerElement.innerHTML = '&rsaquo;';
-		}
-	}, false);
-	
 	// prevent FOUC
 	setTimeout(function() {
 		containerElement.appendChild(iframeContainerElement);
 		containerElement.appendChild(toggleElement);
 	}, 250);
+	
+	/**
+	 * shortcuts
+	 * - Shift+D: open/close the toolbar
+	 * - Escape:  close the toolbar
+	 */
+	window.addEventListener('keydown', function(event) {
+		if (event.shiftKey && event.keyCode == 68) {
+			event.preventDefault();
+			toggleDebugDetails();
+		}
+		if (event.keyCode == 27 && toggleElement.className == 'debug-toolbar-toggler-active') {
+			event.preventDefault();
+			closeDebugDetails();
+		}
+	});
+	
+	/**
+	 * open/close the iframe
+	 */
+	var toggleDebugDetails = function() {
+		if (toggleElement.className == 'debug-toolbar-toggler-active') {
+			closeDebugDetails();
+		}
+		else {
+			openDebugDetails();
+		}
+	};
+	var openDebugDetails = function() {
+		toggleElement.className = 'debug-toolbar-toggler-active';
+		iframeContainerElement.className = 'debug-toolbar-iframe-container-show';
+		toggleInnerElement.innerHTML = '&rsaquo;';
+	};
+	var closeDebugDetails = function() {
+		toggleElement.className = '';
+		iframeContainerElement.className = '';
+		toggleInnerElement.innerHTML = '&lsaquo;';
+		iframeElement.blur();
+	};
+	toggleElement.addEventListener('click', toggleDebugDetails, false);
 }
