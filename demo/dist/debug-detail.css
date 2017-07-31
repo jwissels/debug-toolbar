@@ -6,6 +6,9 @@ header {
 	margin-bottom: 0;
 }
 
+.panel-group .panel-heading.clickable {
+	cursor: pointer;
+}
 .panel-group .panel-heading > *:last-child {
 	margin-bottom: 0;
 }
