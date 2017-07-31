@@ -36,7 +36,7 @@ class Display {
 	}
 	
 	private function getRequestPart($logData) {
-		$durationAlert = ($logData->request_duration > $this->options['request']['duration_alert']) ? $this->options['request']['duration_alert'].' s' : null;
+		$durationAlert = ($logData->request_duration > $this->options['request']['duration_alert']) ? '> '.$this->options['request']['duration_alert'].' s' : null;
 		$gitAlert      = (strpos($logData->git->branch, 'HEAD detached at') !== false) ? 'HEAD detached' : null;
 		
 		$values = [

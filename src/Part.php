@@ -35,7 +35,7 @@ class Part {
 		$alertValues = [];
 		
 		foreach ($this->values as $value) {
-			if ($value->alertLevel === null) {
+			if ($value->alert === null) {
 				continue;
 			}
 			
@@ -47,7 +47,7 @@ class Part {
 	
 	public function hasAlertValues() {
 		foreach ($this->values as $value) {
-			if ($value->alertLevel !== null) {
+			if ($value->alert !== null) {
 				return true;
 			}
 		}

@@ -26,29 +26,29 @@
 					</h4>
 					<ul class="list-inline small">
 						{{# featuredValues}}
-							{{# alertLevel}}
+							{{# alert}}
 								<li class="text-danger" title="{{title}}"><strong>{{value}}</strong></li>
-							{{/ alertLevel}}
-							{{^ alertLevel}}
+							{{/ alert}}
+							{{^ alert}}
 								<li class="text-muted" title="{{title}}">{{value}}</li>
-							{{/ alertLevel}}
+							{{/ alert}}
 						{{/ featuredValues}}
 					</ul>
 				</div>
 				<div class="collapse_part_{{key}} panel-collapse collapse {{# hasAlertValues}}in{{/ hasAlertValues}}" role="tabpanel" aria-labelledby="part_{{key}}">
 					<table class="table panel-body">
 						{{# values}}
-							<tr class="{{# hasAlertValues}}{{^ alertLevel}}collapse collapse_part_{{key}}_details{{/ alertLevel}}{{/ hasAlertValues}}">
+							<tr class="{{# hasAlertValues}}{{^ alert}}collapse collapse_part_{{key}}_details{{/ alert}}{{/ hasAlertValues}}">
 								<th>{{title}}</th>
 								<td>
 									{{& value}}
-									{{# alertLevel}}
+									{{# alert}}
 										<br>
 										<span class="text-danger">
 											<i class="fa fa-exclamation-triangle"></i>&nbsp;
-											<strong>{{alertLevel}}</strong>
+											<strong>{{alert}}</strong>
 										</span>
-									{{/ alertLevel}}
+									{{/ alert}}
 								</td>
 							</tr>
 						{{/ values}}

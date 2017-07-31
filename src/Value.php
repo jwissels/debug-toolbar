@@ -9,12 +9,12 @@ class Value {
 	
 	public $featured = false;
 	
-	public $alertLevel = null;
+	public $alert = null;
 	
-	public function __construct($title, $value, $featured=false, $alertLevel=null) {
-		$this->title      = $title;
-		$this->value      = $value;
-		$this->featured   = $featured;
-		$this->alertLevel = $alertLevel;
+	public function __construct($title, $value, $featured = false, $alert=null) {
+		$this->title    = $title;
+		$this->value    = $value;
+		$this->featured = $featured;
+		$this->alert    = $alert;
 	}
 }
