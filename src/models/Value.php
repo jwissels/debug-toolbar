@@ -1,6 +1,6 @@
 <?php
 
-namespace alsvanzelf\debugtoolbar;
+namespace alsvanzelf\debugtoolbar\models;
 
 class Value {
 	public $title = '';

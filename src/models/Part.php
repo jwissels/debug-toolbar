@@ -1,8 +1,8 @@
 <?php
 
-namespace alsvanzelf\debugtoolbar;
+namespace alsvanzelf\debugtoolbar\models;
 
-use alsvanzelf\debugtoolbar\Value;
+use alsvanzelf\debugtoolbar\models\Value;
 
 class Part {
 	public $key = '';

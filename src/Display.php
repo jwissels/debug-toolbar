@@ -2,8 +2,8 @@
 
 namespace alsvanzelf\debugtoolbar;
 
-use alsvanzelf\debugtoolbar\Part;
-use alsvanzelf\debugtoolbar\Value;
+use alsvanzelf\debugtoolbar\models\Part;
+use alsvanzelf\debugtoolbar\models\Value;
 
 class Display {
 	private $log;
