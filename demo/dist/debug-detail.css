@@ -28,6 +28,12 @@ header {
 	font-weight: normal;
 }
 
+.table th {
+	width: 25%;
+	min-width: 100px;
+	max-width: 150px;
+}
+
 .alert-collapse-details {
 	padding: 10px;
 	border-top: 1px solid #DDDDDD;

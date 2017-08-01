@@ -16,11 +16,10 @@
 	</header>
 	<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 		{{# parts}}
-			<div class="panel panel-default">
+			<div class="panel panel-{{# hasAlertValues}}danger{{/ hasAlertValues}}{{^ hasAlertValues}}default{{/ hasAlertValues}}">
 				<div class="panel-heading" role="tab" id="part_{{key}}">
 					<h4 class="panel-title">
-						<a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href=".collapse_part_{{key}}" aria-expanded="false" aria-controls="collapse_part_{{key}}">
-							{{# hasAlertValues}}<i class="fa fa-exclamation-triangle text-danger"></i>&nbsp;{{/ hasAlertValues}}
+						<a class="{{# collapse}}collapsed{{/ collapse}}" role="button" data-toggle="collapse" data-parent="#accordion" href=".collapse_part_{{key}}" aria-expanded="{{# collapse}}false{{/ collapse}}{{^ collapse}}true{{/ collapse}}" aria-controls="collapse_part_{{key}}">
 							{{title}}
 						</a>
 					</h4>
@@ -35,10 +34,10 @@
 						{{/ featuredValues}}
 					</ul>
 				</div>
-				<div class="collapse_part_{{key}} panel-collapse collapse {{# hasAlertValues}}in{{/ hasAlertValues}}" role="tabpanel" aria-labelledby="part_{{key}}">
+				<div class="collapse_part_{{key}} panel-collapse collapse {{^ collapse}}in{{/ collapse}}{{# collapse}}{{# hasAlertValues}}in{{/ hasAlertValues}}{{/ collapse}}" role="tabpanel" aria-labelledby="part_{{key}}">
 					<table class="table panel-body">
 						{{# values}}
-							<tr class="{{# hasAlertValues}}{{^ alert}}collapse collapse_part_{{key}}_details{{/ alert}}{{/ hasAlertValues}}">
+							<tr {{# collapse}}{{# hasAlertValues}}{{^ alert}}class="collapse collapse_part_{{key}}_details"{{/ alert}}{{/ hasAlertValues}}{{/ collapse}}>
 								<th>{{title}}</th>
 								<td>
 									{{& value}}
@@ -53,14 +52,16 @@
 							</tr>
 						{{/ values}}
 					</table>
-					{{# hasAlertValues}}
-						<div class="alert-collapse-details">
-							<a href="#" data-toggle="collapse" data-target=".collapse_part_{{key}}_details" aria-expanded="false" aria-controls="collapse_part_{{key}}_details">
-								<span class="collapse collapse_part_{{key}}_details in">Show all</span>
-								<span class="collapse collapse_part_{{key}}_details">Hide non-alerts</span>
-							</a>
-						</div>
-					{{/ hasAlertValues}}
+					{{# collapse}}
+						{{# hasAlertValues}}
+							<div class="alert-collapse-details">
+								<a href="#" data-toggle="collapse" data-target=".collapse_part_{{key}}_details" aria-expanded="{{# collapse}}false{{/ collapse}}{{^ collapse}}true{{/ collapse}}" aria-controls="collapse_part_{{key}}_details">
+									<span class="collapse collapse_part_{{key}}_details in">Show all</span>
+									<span class="collapse collapse_part_{{key}}_details">Hide non-alerts</span>
+								</a>
+							</div>
+						{{/ hasAlertValues}}
+					{{/ collapse}}
 				</div>
 			</div>
 		{{/ parts}}

@@ -9,7 +9,8 @@ class Display {
 	private $log;
 	
 	private $options = [
-		'request' => ['duration_alert'=>0.5],
+		'collapse' => false,
+		'request'  => ['duration_alert'=>0.5],
 	];
 	
 	public function __construct($log, array $options=[]) {
@@ -25,8 +26,9 @@ class Display {
 		
 		$template = file_get_contents(__DIR__.'/templates/detail.html');
 		$data     = [
-			'log'   => $this->log,
-			'parts' => $parts,
+			'collapse' => $this->options['collapse'],
+			'log'      => $this->log,
+			'parts'    => $parts,
 		];
 		
 		$mustache = new \Mustache_Engine();
