@@ -2,14 +2,14 @@
 
 namespace alsvanzelf\debugtoolbar;
 
-class Toolbar {
+class Toggler {
 	private $logId;
 	
 	private $scriptUrl;
 	
 	private $detailUrl;
 	
-	public function __construct($logId, $scriptUrl='/dist/debug-toolbar.js', $detailUrl='/debug-toolbar.php?logId={logId}') {
+	public function __construct($logId, $scriptUrl='/dist/debug-toggler.js', $detailUrl='/debug-toolbar.php?logId={logId}') {
 		$this->logId     = $logId;
 		$this->scriptUrl = $scriptUrl;
 		$this->detailUrl = $detailUrl;

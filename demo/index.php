@@ -1,7 +1,7 @@
 <?php
 
 use alsvanzelf\debugtoolbar\Log;
-use alsvanzelf\debugtoolbar\Toolbar;
+use alsvanzelf\debugtoolbar\Toggler;
 use MongoDB\Client;
 use Monolog\Logger;
 use Monolog\Handler\MongoDBHandler;
@@ -32,9 +32,9 @@ $logger->pushHandler(new MongoDBHandler(new Client('mongodb://127.0.0.1:27017'),
 $logId = Log::handle($logger);
 
 /**
- * render the toolbar in the template
+ * render the toggler in the template
  */
-$toolbar = new Toolbar($logId);
+$toggler = new Toggler($logId);
 ?>
 <!DOCTYPE html>
 <html>
@@ -43,6 +43,6 @@ $toolbar = new Toolbar($logId);
 </head>
 <body>
 	<h1>Demo</h1>
-	<?php echo $toolbar->render(); ?>
+	<?php echo $toggler->render(); ?>
 </body>
 </html>
