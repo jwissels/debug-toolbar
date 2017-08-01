@@ -39,6 +39,7 @@ class Display {
 	
 	private function getRequestPart($logData) {
 		$durationAlert = ($logData->request_duration > $this->options['request']['duration_alert']) ? '> '.$this->options['request']['duration_alert'].' s' : null;
+		$memoryAlert   = (self::stringToBytes($logData->memory_peak_usage) > self::stringToBytes(ini_get('memory_limit')) / 4) ? '> 25% of set memory limit ('.ini_get('memory_limit').')' : null;
 		$gitAlert      = (strpos($logData->git->branch, 'HEAD detached at') !== false) ? 'HEAD detached' : null;
 		
 		switch ($logData->http_method) {
@@ -57,8 +58,8 @@ class Display {
 		
 		$values = [
 			new Value('Request',  $requestMethod.$logData->url.$requestType),
-			new Value('Duration', round($logData->request_duration, 4).' s', $featured=true, $durationAlert),
-			new Value('Memory',   $logData->memory_peak_usage.' (peak)', $featured=true),
+			new Value('Duration', round($logData->request_duration, 3).' s', $featured=true, $durationAlert),
+			new Value('Memory',   $logData->memory_peak_usage.' (peak)', $featured=true, $memoryAlert),
 			new Value('Git',      $logData->git->branch.' <code>'.substr($logData->git->commit, 0, 7).'</code>', $featured=false, $gitAlert),
 		];
 		
@@ -122,5 +123,20 @@ class Display {
 		];
 		
 		return new Part('PDO', ...$values);
+	}
+	
+	public static function stringToBytes($byteString) {
+		preg_match('{(?<bytes>[0-9]+) ?(?<unit>[A-Z])}', $byteString, $match);
+		$bytes = (int) $match['bytes'];
+		
+		if (empty($match['unit'])) {
+			return $bytes;
+		}
+		
+		$units    = ['K'=>1, 'M'=>2, 'G'=>3, 'T'=>4];
+		$exponent = $units[$match['unit']];
+		$bytes    = $bytes * pow(1024, $exponent);
+		
+		return $bytes;
 	}
 }
