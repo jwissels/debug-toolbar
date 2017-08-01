@@ -3,7 +3,7 @@
 namespace alsvanzelf\debugtoolbar;
 
 use alsvanzelf\debugtoolbar\models\Part;
-use alsvanzelf\debugtoolbar\models\Value;
+use alsvanzelf\debugtoolbar\models\Metric;
 
 class Display {
 	private $log;
@@ -56,14 +56,14 @@ class Display {
 			$requestType .= ' <span class="label label-default">'.$logData->request_type.'</span>';
 		}
 		
-		$values = [
-			new Value('Request',  $requestMethod.$logData->url.$requestType),
-			new Value('Duration', round($logData->request_duration, 3).' s', $featured=true, $durationAlert),
-			new Value('Memory',   $logData->memory_peak_usage.' (peak)', $featured=true, $memoryAlert),
-			new Value('Git',      $logData->git->branch.' <code>'.substr($logData->git->commit, 0, 7).'</code>', $featured=false, $gitAlert),
+		$metrics = [
+			new Metric('Request',  $requestMethod.$logData->url.$requestType),
+			new Metric('Duration', round($logData->request_duration, 3).' s', $featured=true, $durationAlert),
+			new Metric('Memory',   $logData->memory_peak_usage.' (peak)', $featured=true, $memoryAlert),
+			new Metric('Git',      $logData->git->branch.' <code>'.substr($logData->git->commit, 0, 7).'</code>', $featured=false, $gitAlert),
 		];
 		
-		return new Part('Request', ...$values);
+		return new Part('Request', ...$metrics);
 	}
 	
 	private function getPDOPart($logData) {
@@ -116,13 +116,13 @@ class Display {
 			$equalAlert = '> 2 queries';
 		}
 		
-		$values = [
-			new Value('All',     count($logData->pdo_queries).' queries', $featured=true),
-			new Value('Similar', $similarCount.' queries, at most '.$similarHighest.' times', $featured=false, $similarAlert),
-			new Value('Equal',   $equalCount.' queries, at most '.$equalHighest.' times', $featured=false, $equalAlert),
+		$metrics = [
+			new Metric('All',     count($logData->pdo_queries).' queries', $featured=true),
+			new Metric('Similar', $similarCount.' queries, at most '.$similarHighest.' times', $featured=false, $similarAlert),
+			new Metric('Equal',   $equalCount.' queries, at most '.$equalHighest.' times', $featured=false, $equalAlert),
 		];
 		
-		return new Part('PDO', ...$values);
+		return new Part('PDO', ...$metrics);
 	}
 	
 	public static function stringToBytes($byteString) {

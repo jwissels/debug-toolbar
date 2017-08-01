@@ -2,7 +2,7 @@
 
 namespace alsvanzelf\debugtoolbar\models;
 
-class Value {
+class Metric {
 	public $title = '';
 	
 	public $value = '';

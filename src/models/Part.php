@@ -2,52 +2,52 @@
 
 namespace alsvanzelf\debugtoolbar\models;
 
-use alsvanzelf\debugtoolbar\models\Value;
+use alsvanzelf\debugtoolbar\models\Metric;
 
 class Part {
 	public $key = '';
 	
 	public $title = '';
 	
-	public $values = [];
+	public $metrics = [];
 	
-	public function __construct($title, Value ...$values) {
-		$this->key      = preg_replace('{[^a-z0-9-]}', '-', strtolower($title));
-		$this->title    = $title;
-		$this->values   = $values;
+	public function __construct($title, Metric ...$metrics) {
+		$this->key     = preg_replace('{[^a-z0-9-]}', '-', strtolower($title));
+		$this->title   = $title;
+		$this->metrics = $metrics;
 	}
 	
-	public function featuredValues() {
-		$featuredValues = [];
+	public function featuredMetrics() {
+		$featuredMetrics = [];
 		
-		foreach ($this->values as $value) {
-			if ($value->featured === false) {
+		foreach ($this->metrics as $metric) {
+			if ($metric->featured === false) {
 				continue;
 			}
 			
-			$featuredValues[] = $value;
+			$featuredMetrics[] = $metric;
 		}
 		
-		return $featuredValues;
+		return $featuredMetrics;
 	}
 	
-	public function alertValues() {
-		$alertValues = [];
+	public function alertMetrics() {
+		$alertMetrics = [];
 		
-		foreach ($this->values as $value) {
-			if ($value->alert === null) {
+		foreach ($this->metrics as $metric) {
+			if ($metric->alert === null) {
 				continue;
 			}
 			
-			$alertValues[] = $value;
+			$alertMetrics[] = $metric;
 		}
 		
-		return $alertValues;
+		return $alertMetrics;
 	}
 	
-	public function hasAlertValues() {
-		foreach ($this->values as $value) {
-			if ($value->alert !== null) {
+	public function hasAlertMetrics() {
+		foreach ($this->metrics as $metric) {
+			if ($metric->alert !== null) {
 				return true;
 			}
 		}
