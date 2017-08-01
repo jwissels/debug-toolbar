@@ -4,6 +4,7 @@ namespace alsvanzelf\debugtoolbar;
 
 use alsvanzelf\debugtoolbar\processors\PDOQueryProcessor;
 use alsvanzelf\debugtoolbar\processors\RequestTimeProcessor;
+use alsvanzelf\debugtoolbar\processors\RequestTypeProcessor;
 use Monolog\Processor\GitProcessor;
 use Monolog\Processor\MemoryPeakUsageProcessor;
 use Monolog\Processor\MemoryUsageProcessor;
@@ -52,6 +53,7 @@ class Log {
 		$logger->pushProcessor(new MemoryPeakUsageProcessor());
 		$logger->pushProcessor(new MemoryUsageProcessor());
 		$logger->pushProcessor(new RequestTimeProcessor());
+		$logger->pushProcessor(new RequestTypeProcessor());
 		$logger->pushProcessor(new WebProcessor());
 		
 		/**

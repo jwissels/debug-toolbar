@@ -39,8 +39,22 @@ class Display {
 		$durationAlert = ($logData->request_duration > $this->options['request']['duration_alert']) ? '> '.$this->options['request']['duration_alert'].' s' : null;
 		$gitAlert      = (strpos($logData->git->branch, 'HEAD detached at') !== false) ? 'HEAD detached' : null;
 		
+		switch ($logData->http_method) {
+			case 'GET':    $requestMethod = $logData->http_method.' ';                                      break;
+			case 'POST':   $requestMethod = '<span class="text-primary">'.$logData->http_method.'</span> '; break;
+			case 'PUT':
+			case 'PATCH':  $requestMethod = '<span class="text-info">'   .$logData->http_method.'</span> '; break;
+			case 'DELETE': $requestMethod = '<span class="text-danger">' .$logData->http_method.'</span> '; break;
+			default:       $requestMethod = '<code>'                     .$logData->http_method.'</code> '; break;
+		}
+		
+		$requestType = '';
+		if ($logData->request_type !== null) {
+			$requestType .= ' <span class="label label-default">'.$logData->request_type.'</span>';
+		}
+		
 		$values = [
-			new Value('Request',  '<code>'.$logData->http_method.' '.$logData->url.'</code>'),
+			new Value('Request',  $requestMethod.$logData->url.$requestType),
 			new Value('Duration', round($logData->request_duration, 4).' s', $featured=true, $durationAlert),
 			new Value('Memory',   $logData->memory_peak_usage.' (peak)', $featured=true),
 			new Value('Git',      $logData->git->branch.' <code>'.substr($logData->git->commit, 0, 7).'</code>', $featured=false, $gitAlert),
