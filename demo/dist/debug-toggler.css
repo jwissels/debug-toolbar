@@ -1,4 +1,4 @@
-#debug-toolbar-iframe-container {
+#debug-toolbar-sidebar {
 	position: fixed;
 	top: 0;
 	bottom: 0;
@@ -11,7 +11,7 @@
 	-o-transition: right 0.25s ease;
 	transition: right 0.25s ease;
 }
-#debug-toolbar-iframe-container.debug-toolbar-iframe-container-show {
+#debug-toolbar-sidebar.debug-toolbar-sidebar-show {
 	right: 0;
 	box-shadow: 0 0 4px 1px #666666;
 	filter: progid:DXImageTransform.Microsoft.Shadow(Color=#CCCCCC, Strength=10, Direction=0),

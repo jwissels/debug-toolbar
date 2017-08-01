@@ -5,7 +5,7 @@
 	<link rel="stylesheet" href="/dist/bootstrap-3.3.7/css/bootstrap.min.css"       integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<link rel="stylesheet" href="/dist/bootstrap-3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
 	<link rel="stylesheet" href="/dist/font-awesome-4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-	<link rel="stylesheet" href="/dist/debug-detail.css" crossorigin="anonymous">
+	<link rel="stylesheet" href="/dist/debug-sidebar.css" crossorigin="anonymous">
 </head>
 <body>
 	<header class="small text-muted">
@@ -54,7 +54,7 @@
 					</table>
 					{{# collapse}}
 						{{# hasAlertMetrics}}
-							<div class="alert-collapse-details">
+							<div class="alert-collapse-metrics">
 								<a href="#" data-toggle="collapse" data-target=".collapse_part_{{key}}_details" aria-expanded="{{# collapse}}false{{/ collapse}}{{^ collapse}}true{{/ collapse}}" aria-controls="collapse_part_{{key}}_details">
 									<span class="collapse collapse_part_{{key}}_details in">Show all</span>
 									<span class="collapse collapse_part_{{key}}_details">Hide non-alerts</span>
@@ -69,6 +69,6 @@
 	
 	<script type="text/javascript" src="/dist/jquery-3.2.1/jquery-3.2.1.min.js"    integrity="sha384-xBuQ/xzmlsLoJpyjoggmTEz8OWUFM0/RC5BsqQBDX2v5cMvDHcMakNTNrHIW2I5f" crossorigin="anonymous"></script>
 	<script type="text/javascript" src="/dist/bootstrap-3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-	<script type="text/javascript" src="/dist/debug-detail.js" crossorigin="anonymous"></script>
+	<script type="text/javascript" src="/dist/debug-sidebar.js" crossorigin="anonymous"></script>
 </body>
 </html>

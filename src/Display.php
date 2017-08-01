@@ -18,13 +18,13 @@ class Display {
 		$this->options = array_merge($this->options, $options);
 	}
 	
-	public function renderLog() {
+	public function renderSidebar() {
 		$parts = [
 			$this->getRequestPart($this->log->extra),
 			$this->getPDOPart($this->log->extra),
 		];
 		
-		$template = file_get_contents(__DIR__.'/templates/detail.html');
+		$template = file_get_contents(__DIR__.'/templates/sidebar.html');
 		$data     = [
 			'collapse' => $this->options['collapse'],
 			'log'      => $this->log,

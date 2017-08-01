@@ -18,8 +18,8 @@ window.onload = function() {
 	styleElement.href = styleSource;
 	containerElement.appendChild(styleElement);
 	
-	var iframeContainerElement = document.createElement('div');
-	iframeContainerElement.id  = 'debug-toolbar-iframe-container';
+	var sidebarElement = document.createElement('div');
+	sidebarElement.id  = 'debug-toolbar-sidebar';
 	
 	var iframeElement = document.createElement('iframe');
 	iframeElement.src = iframeSource;
@@ -35,7 +35,7 @@ window.onload = function() {
 	
 	// prevent FOUC
 	setTimeout(function() {
-		containerElement.appendChild(iframeContainerElement);
+		containerElement.appendChild(sidebarElement);
 		containerElement.appendChild(toggleElement);
 	}, 250);
 	
@@ -47,39 +47,39 @@ window.onload = function() {
 	window.addEventListener('keydown', function(event) {
 		if (event.ctrlKey == false && event.altKey == false && event.shiftKey && event.keyCode == 68) {
 			event.preventDefault();
-			toggleDebugDetails();
+			toggleDebugSidebar();
 		}
 		if (event.ctrlKey == false && event.altKey == false && event.shiftKey == false && event.keyCode == 27 && toggleElement.className == 'debug-toolbar-toggler-active') {
 			event.preventDefault();
-			closeDebugDetails();
+			closeDebugSidebar();
 		}
 	});
 	
 	/**
 	 * open/close the iframe
 	 */
-	window.toggleDebugDetails = function() {
+	window.toggleDebugSidebar = function() {
 		if (toggleElement.className == 'debug-toolbar-toggler-active') {
-			closeDebugDetails();
+			closeDebugSidebar();
 		}
 		else {
-			openDebugDetails();
+			openDebugSidebar();
 		}
 	};
-	window.openDebugDetails = function() {
+	window.openDebugSidebar = function() {
 		if (document.getElementById(iframeElement.id) == null) {
-			iframeContainerElement.appendChild(iframeElement);
+			sidebarElement.appendChild(iframeElement);
 		}
 		
 		toggleElement.className = 'debug-toolbar-toggler-active';
-		iframeContainerElement.className = 'debug-toolbar-iframe-container-show';
+		sidebarElement.className = 'debug-toolbar-sidebar-show';
 		toggleInnerElement.innerHTML = '&rsaquo;';
 	};
-	window.closeDebugDetails = function() {
+	window.closeDebugSidebar = function() {
 		toggleElement.className = '';
-		iframeContainerElement.className = '';
+		sidebarElement.className = '';
 		toggleInnerElement.innerHTML = '&lsaquo;';
 		iframeElement.blur();
 	};
-	toggleElement.addEventListener('click', toggleDebugDetails, false);
+	toggleElement.addEventListener('click', toggleDebugSidebar, false);
 }

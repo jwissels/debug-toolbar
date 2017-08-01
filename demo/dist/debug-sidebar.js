@@ -27,11 +27,11 @@ window.onload = function() {
 	window.addEventListener('keydown', function(event) {
 		if (event.ctrlKey == false && event.altKey == false && event.shiftKey && event.keyCode == 68) {
 			event.preventDefault();
-			top.window.closeDebugDetails();
+			top.window.closeDebugSidebar();
 		}
 		if (event.ctrlKey == false && event.altKey == false && event.shiftKey == false && event.keyCode == 27) {
 			event.preventDefault();
-			top.window.closeDebugDetails();
+			top.window.closeDebugSidebar();
 		}
 	});
 }
