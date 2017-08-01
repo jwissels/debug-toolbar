@@ -1,16 +1,16 @@
 window.onload = function() {
-	var inputElements = document.getElementsByName('debug-toolbar-ids[]');
+	var inputElements = document.getElementsByName('debugtoolbar-ids[]');
 	if (inputElements.length < 1) {
 		console.info('no debug ids found');
 		return;
 	}
 	
-	var scriptElement = document.getElementById('debug-toolbar-script');
+	var scriptElement = document.getElementById('debugtoolbar-script');
 	var styleSource   = scriptElement.src.replace(/\.js/, '.css');
 	var iframeSource  = scriptElement.dataset.url.replace(/\{logId\}/, inputElements[0].value);
 	
 	var containerElement = document.createElement('div');
-	containerElement.id = 'debug-toolbar-container';
+	containerElement.id = 'debugtoolbar-container';
 	document.body.appendChild(containerElement);
 	
 	var styleElement = document.createElement('link');
@@ -19,17 +19,17 @@ window.onload = function() {
 	containerElement.appendChild(styleElement);
 	
 	var sidebarElement = document.createElement('div');
-	sidebarElement.id  = 'debug-toolbar-sidebar';
+	sidebarElement.id  = 'debugtoolbar-sidebar';
 	
 	var iframeElement = document.createElement('iframe');
 	iframeElement.src = iframeSource;
-	iframeElement.id  = 'debug-toolbar-iframe';
+	iframeElement.id  = 'debugtoolbar-iframe';
 	
 	var toggleElement = document.createElement('div');
-	toggleElement.id = 'debug-toolbar-toggler';
+	toggleElement.id = 'debugtoolbar-toggler';
 	
 	var toggleInnerElement = document.createElement('div');
-	toggleInnerElement.id        = 'debug-toolbar-toggler-inner';
+	toggleInnerElement.id        = 'debugtoolbar-toggler-inner';
 	toggleInnerElement.innerHTML = '&lsaquo;';
 	toggleElement.appendChild(toggleInnerElement);
 	
@@ -41,15 +41,15 @@ window.onload = function() {
 	
 	/**
 	 * shortcuts
-	 * - Shift+D: open/close the toolbar
-	 * - Escape:  close the toolbar
+	 * - Shift+D: open/close the sidebar
+	 * - Escape:  close the sidebar
 	 */
 	window.addEventListener('keydown', function(event) {
 		if (event.ctrlKey == false && event.altKey == false && event.shiftKey && event.keyCode == 68) {
 			event.preventDefault();
 			toggleDebugSidebar();
 		}
-		if (event.ctrlKey == false && event.altKey == false && event.shiftKey == false && event.keyCode == 27 && toggleElement.className == 'debug-toolbar-toggler-active') {
+		if (event.ctrlKey == false && event.altKey == false && event.shiftKey == false && event.keyCode == 27 && toggleElement.className == 'debugtoolbar-toggler-active') {
 			event.preventDefault();
 			closeDebugSidebar();
 		}
@@ -59,7 +59,7 @@ window.onload = function() {
 	 * open/close the iframe
 	 */
 	window.toggleDebugSidebar = function() {
-		if (toggleElement.className == 'debug-toolbar-toggler-active') {
+		if (toggleElement.className == 'debugtoolbar-toggler-active') {
 			closeDebugSidebar();
 		}
 		else {
@@ -71,8 +71,8 @@ window.onload = function() {
 			sidebarElement.appendChild(iframeElement);
 		}
 		
-		toggleElement.className = 'debug-toolbar-toggler-active';
-		sidebarElement.className = 'debug-toolbar-sidebar-show';
+		toggleElement.className = 'debugtoolbar-toggler-active';
+		sidebarElement.className = 'debugtoolbar-sidebar-show';
 		toggleInnerElement.innerHTML = '&rsaquo;';
 	};
 	window.closeDebugSidebar = function() {

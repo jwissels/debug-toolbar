@@ -21,8 +21,8 @@ window.onload = function() {
 	
 	/**
 	 * shortcuts
-	 * - Shift+D: open/close the toolbar
-	 * - Escape:  close the toolbar
+	 * - Shift+D: open/close the sidebar
+	 * - Escape:  close the sidebar
 	 */
 	window.addEventListener('keydown', function(event) {
 		if (event.ctrlKey == false && event.altKey == false && event.shiftKey && event.keyCode == 68) {
