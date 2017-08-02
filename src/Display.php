@@ -18,20 +18,26 @@ class Display {
 		$this->options = array_merge($this->options, $options);
 	}
 	
-	public function renderSidebar() {
+	public function render() {
 		$parts = [
 			$this->getRequestPart($this->log->extra),
 			$this->getPDOPart($this->log->extra),
 		];
 		
-		$template = file_get_contents(__DIR__.'/templates/sidebar.html');
+		$options = [
+			'partials' => [
+				'detail'  => file_get_contents(__DIR__.'/templates/detail.html'),
+				'sidebar' => file_get_contents(__DIR__.'/templates/sidebar.html'),
+			],
+		];
+		$template = file_get_contents(__DIR__.'/templates/display.html');
 		$data     = [
 			'collapse' => $this->options['collapse'],
 			'log'      => $this->log,
 			'parts'    => $parts,
 		];
 		
-		$mustache = new \Mustache_Engine();
+		$mustache = new \Mustache_Engine($options);
 		$rendered = $mustache->render($template, $data);
 		
 		return $rendered;

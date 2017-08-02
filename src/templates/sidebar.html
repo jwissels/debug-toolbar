@@ -1,13 +1,4 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Debug detail {{log.context.logId}}</title>
-	<link rel="stylesheet" href="/dist/bootstrap-3.3.7/css/bootstrap.min.css"       integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-	<link rel="stylesheet" href="/dist/bootstrap-3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-	<link rel="stylesheet" href="/dist/font-awesome-4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-	<link rel="stylesheet" href="/dist/debug-sidebar.css" crossorigin="anonymous">
-</head>
-<body>
+<div id="sidebar">
 	<header class="small text-muted">
 		<ul class="list-inline">
 			<li>ID {{log.context.logId}}</li>
@@ -37,7 +28,7 @@
 				<div class="collapse_part_{{key}} panel-collapse collapse {{^ collapse}}in{{/ collapse}}{{# collapse}}{{# hasAlertMetrics}}in{{/ hasAlertMetrics}}{{/ collapse}}" role="tabpanel" aria-labelledby="part_{{key}}">
 					<table class="table panel-body">
 						{{# metrics}}
-							<tr {{# collapse}}{{# hasAlertMetrics}}{{^ alert}}class="collapse collapse_part_{{key}}_details"{{/ alert}}{{/ hasAlertMetrics}}{{/ collapse}}>
+							<tr {{# collapse}}{{# hasAlertMetrics}}{{^ alert}}class="collapse collapse_part_{{key}}_metrics"{{/ alert}}{{/ hasAlertMetrics}}{{/ collapse}}>
 								<th>{{title}}</th>
 								<td>
 									{{& value}}
@@ -55,9 +46,9 @@
 					{{# collapse}}
 						{{# hasAlertMetrics}}
 							<div class="alert-collapse-metrics">
-								<a href="#" data-toggle="collapse" data-target=".collapse_part_{{key}}_details" aria-expanded="{{# collapse}}false{{/ collapse}}{{^ collapse}}true{{/ collapse}}" aria-controls="collapse_part_{{key}}_details">
-									<span class="collapse collapse_part_{{key}}_details in">Show all</span>
-									<span class="collapse collapse_part_{{key}}_details">Hide non-alerts</span>
+								<a href="#" data-toggle="collapse" data-target=".collapse_part_{{key}}_metrics" aria-expanded="{{# collapse}}false{{/ collapse}}{{^ collapse}}true{{/ collapse}}" aria-controls="collapse_part_{{key}}_metrics">
+									<span class="collapse collapse_part_{{key}}_metrics in">Show all</span>
+									<span class="collapse collapse_part_{{key}}_metrics">Hide non-alerts</span>
 								</a>
 							</div>
 						{{/ hasAlertMetrics}}
@@ -66,9 +57,4 @@
 			</div>
 		{{/ parts}}
 	</div>
-	
-	<script type="text/javascript" src="/dist/jquery-3.2.1/jquery-3.2.1.min.js"    integrity="sha384-xBuQ/xzmlsLoJpyjoggmTEz8OWUFM0/RC5BsqQBDX2v5cMvDHcMakNTNrHIW2I5f" crossorigin="anonymous"></script>
-	<script type="text/javascript" src="/dist/bootstrap-3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
-	<script type="text/javascript" src="/dist/debug-sidebar.js" crossorigin="anonymous"></script>
-</body>
-</html>
+</div>

@@ -1,3 +1,19 @@
+#sidebar {
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 450px;
+	height: 100%;
+	background-color: white;
+	
+	/* only visible once the detail is shown */
+	box-shadow: 0 0 4px 1px #666666;
+	filter: progid:DXImageTransform.Microsoft.Shadow(Color=#CCCCCC, Strength=10, Direction=0),
+	        progid:DXImageTransform.Microsoft.Shadow(Color=#CCCCCC, Strength=10, Direction=90),
+	        progid:DXImageTransform.Microsoft.Shadow(Color=#CCCCCC, Strength=10, Direction=180),
+	        progid:DXImageTransform.Microsoft.Shadow(Color=#CCCCCC, Strength=10, Direction=270);
+}
+
 header {
 	padding: 10px 15px 0;
 }

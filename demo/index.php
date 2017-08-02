@@ -40,6 +40,11 @@ $toggler = new Toggler($logId);
 <html>
 <head>
 	<title>Demo</title>
+	<style type="text/css">
+		body {
+			background-color: lightblue;
+		}
+	</style>
 </head>
 <body>
 	<h1>Demo</h1>

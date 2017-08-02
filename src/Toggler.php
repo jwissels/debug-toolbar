@@ -7,12 +7,12 @@ class Toggler {
 	
 	private $scriptUrl;
 	
-	private $detailUrl;
+	private $displayUrl;
 	
-	public function __construct($logId, $scriptUrl='/dist/debug-toggler.js', $detailUrl='/debug-display.php?logId={logId}') {
+	public function __construct($logId, $scriptUrl='/dist/debug-toggler.js', $displayUrl='/debug-display.php?logId={logId}') {
 		$this->logId     = $logId;
 		$this->scriptUrl = $scriptUrl;
-		$this->detailUrl = $detailUrl;
+		$this->displayUrl = $displayUrl;
 	}
 	
 	public function render() {
@@ -20,7 +20,7 @@ class Toggler {
 	}
 	
 	public function scriptTag() {
-		return '<script src="'.$this->scriptUrl.'" id="debugtoolbar-script" data-url="'.$this->detailUrl.'"></script>';
+		return '<script src="'.$this->scriptUrl.'" id="debugtoolbar-script" data-url="'.$this->displayUrl.'"></script>';
 	}
 	
 	public function idTag() {

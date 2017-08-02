@@ -1,0 +1,5 @@
+#detail {
+	position: relative;
+	margin: 25px;
+	margin-right: calc(25px + 450px);
+}

@@ -5,6 +5,9 @@ window.onload = function() {
 		return;
 	}
 	
+	/**
+	 * bootstrap
+	 */
 	var scriptElement = document.getElementById('debugtoolbar-script');
 	var styleSource   = scriptElement.src.replace(/\.js/, '.css');
 	var iframeSource  = scriptElement.dataset.url.replace(/\{logId\}/, inputElements[0].value);
@@ -18,13 +21,9 @@ window.onload = function() {
 	styleElement.href = styleSource;
 	containerElement.appendChild(styleElement);
 	
-	var sidebarElement = document.createElement('div');
-	sidebarElement.id  = 'debugtoolbar-sidebar';
-	
-	var iframeElement = document.createElement('iframe');
-	iframeElement.src = iframeSource;
-	iframeElement.id  = 'debugtoolbar-iframe';
-	
+	/**
+	 * toggler & display
+	 */
 	var toggleElement = document.createElement('div');
 	toggleElement.id = 'debugtoolbar-toggler';
 	
@@ -33,53 +32,64 @@ window.onload = function() {
 	toggleInnerElement.innerHTML = '&lsaquo;';
 	toggleElement.appendChild(toggleInnerElement);
 	
+	var displayElement = document.createElement('div');
+	displayElement.id = 'debugtoolbar-display';
+	
+	var displayIframeElement = document.createElement('iframe');
+	displayIframeElement.src = iframeSource;
+	displayIframeElement.id  = 'debugtoolbar-display-iframe';
+	
 	// prevent FOUC
 	setTimeout(function() {
-		containerElement.appendChild(sidebarElement);
+		containerElement.appendChild(displayElement);
 		containerElement.appendChild(toggleElement);
 	}, 250);
 	
 	/**
 	 * shortcuts
-	 * - Shift+D: open/close the sidebar
-	 * - Escape:  close the sidebar
+	 * - Shift+D: open/close display
+	 * - Escape:  close display
 	 */
 	window.addEventListener('keydown', function(event) {
 		if (event.ctrlKey == false && event.altKey == false && event.shiftKey && event.keyCode == 68) {
 			event.preventDefault();
-			toggleDebugSidebar();
+			toggleDebugDisplay();
 		}
-		if (event.ctrlKey == false && event.altKey == false && event.shiftKey == false && event.keyCode == 27 && toggleElement.className == 'debugtoolbar-toggler-active') {
+		if (event.ctrlKey == false && event.altKey == false && event.shiftKey == false && event.keyCode == 27 && toggleElement.className.indexOf('debugtoolbar-toggler-active') != -1) {
 			event.preventDefault();
-			closeDebugSidebar();
+			closeDebugDisplay();
 		}
 	});
 	
 	/**
-	 * open/close the iframe
+	 * open/extend/close display
 	 */
-	window.toggleDebugSidebar = function() {
-		if (toggleElement.className == 'debugtoolbar-toggler-active') {
-			closeDebugSidebar();
+	window.toggleDebugDisplay = function() {
+		if (toggleElement.className.indexOf('debugtoolbar-toggler-active') != -1) {
+			closeDebugDisplay();
 		}
 		else {
-			openDebugSidebar();
+			openDebugDisplay();
 		}
 	};
-	window.openDebugSidebar = function() {
-		if (document.getElementById(iframeElement.id) == null) {
-			sidebarElement.appendChild(iframeElement);
+	window.openDebugDisplay = function() {
+		if (document.getElementById(displayIframeElement.id) == null) {
+			displayElement.appendChild(displayIframeElement);
 		}
 		
-		toggleElement.className = 'debugtoolbar-toggler-active';
-		sidebarElement.className = 'debugtoolbar-sidebar-show';
+		toggleElement.className = 'debugtoolbar-toggler-active debugtoolbar-toggler-sidebar';
+		displayElement.className = 'debugtoolbar-display-active debugtoolbar-display-sidebar';
 		toggleInnerElement.innerHTML = '&rsaquo;';
 	};
-	window.closeDebugSidebar = function() {
+	window.extendDebugDisplay = function() {
+		toggleElement.className = 'debugtoolbar-toggler-active debugtoolbar-toggler-detail';
+		displayElement.className = 'debugtoolbar-display-active debugtoolbar-display-detail';
+	}
+	window.closeDebugDisplay = function() {
+		displayElement.className = '';
 		toggleElement.className = '';
-		sidebarElement.className = '';
 		toggleInnerElement.innerHTML = '&lsaquo;';
-		iframeElement.blur();
+		displayIframeElement.blur();
 	};
-	toggleElement.addEventListener('click', toggleDebugSidebar, false);
+	toggleElement.addEventListener('click', toggleDebugDisplay, false);
 }
