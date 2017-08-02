@@ -88,6 +88,8 @@ class Display {
 	}
 	
 	private function getPDOPart($logData) {
+		$allCount     = count($logData->pdo_queries);
+		
 		$similarKeys    = [];
 		$similarQueries = [];
 		$similarHighest = 0;
@@ -121,26 +123,41 @@ class Display {
 		$similarCount = count($similarQueries);
 		$equalCount   = count($equalQueries);
 		
-		$similarAlert   = null;
-		if ($similarHighest > 5) {
-			$similarAlert = '> 5 times';
-		}
-		elseif ($similarCount > 2) {
-			$similarAlert = '> 2 queries';
+		$similarValue = null;
+		$similarAlert = null;
+		if ($similarCount > 0) {
+			if ($similarHighest > 5) {
+				$similarAlert = '> 5 times';
+			}
+			elseif ($similarCount > 2) {
+				$similarAlert = '> 2 queries';
+			}
+			
+			$similarValue = $similarCount.' queries, at most '.$similarHighest.' times';
 		}
 		
-		$equalAlert   = null;
-		if ($equalHighest > 2) {
-			$equalAlert = '> 2 times';
+		$equalValue = null;
+		$equalAlert = null;
+		if ($equalCount > 0) {
+			if ($equalHighest > 2) {
+				$equalAlert = '> 2 times';
+			}
+			elseif ($equalCount > 2) {
+				$equalAlert = '> 2 queries';
+			}
+			
+			$equalValue = $equalCount.' queries, at most '.$equalHighest.' times';
 		}
-		elseif ($equalCount > 2) {
-			$equalAlert = '> 2 queries';
+		
+		$detail = null;
+		if ($allCount) {
+			$detail = new PDORecordsDetail($logData);
 		}
 		
 		$metrics = [
-			new Metric('All',     count($logData->pdo_queries).' queries', $featured=true, $alert=null, $detail=new PDORecordsDetail($logData)),
-			new Metric('Similar', $similarCount.' queries, at most '.$similarHighest.' times', $featured=false, $similarAlert),
-			new Metric('Equal',   $equalCount.' queries, at most '.$equalHighest.' times', $featured=false, $equalAlert),
+			new Metric('All',     $allCount.' queries', $featured=true, $alert=null, $detail),
+			new Metric('Similar', $similarValue, $featured=false, $similarAlert),
+			new Metric('Equal',   $equalValue, $featured=false, $equalAlert),
 		];
 		
 		return new Part('PDO', ...$metrics);

@@ -28,9 +28,12 @@
 				<div class="collapse_part_{{key}} panel-collapse collapse {{^ collapse}}in{{/ collapse}}{{# collapse}}{{# hasAlertMetrics}}in{{/ hasAlertMetrics}}{{/ collapse}}" role="tabpanel" aria-labelledby="part_{{key}}">
 					<table class="table panel-body">
 						{{# metrics}}
-							<tr {{# collapse}}{{# hasAlertMetrics}}{{^ alert}}class="collapse collapse_part_{{key}}_metrics"{{/ alert}}{{/ hasAlertMetrics}}{{/ collapse}}>
+							<tr class="{{^ isAvailable}}text-muted{{/ isAvailable}} {{# collapse}}{{# hasAlertMetrics}}{{^ alert}}collapse collapse_part_{{key}}_metrics{{/ alert}}{{/ hasAlertMetrics}}{{/ collapse}}">
 								<th>{{title}}</th>
 								<td>
+									{{^ isAvailable}}
+										&mdash;
+									{{/ isAvailable}}
 									{{# detail}}
 										<a href="#" data-detail-key="{{key}}">
 											{{& value}}

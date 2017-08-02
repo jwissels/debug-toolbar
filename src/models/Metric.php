@@ -22,4 +22,8 @@ class Metric {
 		$this->alert    = $alert;
 		$this->detail   = $detail;
 	}
+	
+	public function isAvailable() {
+		return ($this->value !== null);
+	}
 }
