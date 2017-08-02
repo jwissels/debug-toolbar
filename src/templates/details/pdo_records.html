@@ -1,0 +1,19 @@
+{{# detail.allRecords}}
+	<div class="row">
+		<div class="col-sm-8">
+			<pre>{{query}}</pre>
+		</div>
+		<div class="col-sm-4">
+			{{# hasBinds}}
+				<table class="table">
+					{{# binds}}
+						<tr>
+							<th>{{key}}</th>
+							<td><code>{{value}}</code></td>
+						</tr>
+					{{/ binds}}
+				</table>
+			{{/ hasBinds}}
+		</div>
+	</div>
+{{/ detail.allRecords}}

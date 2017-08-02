@@ -2,6 +2,8 @@
 
 namespace alsvanzelf\debugtoolbar;
 
+use alsvanzelf\debugtoolbar\models\Detail;
+use alsvanzelf\debugtoolbar\models\PDORecordsDetail;
 use alsvanzelf\debugtoolbar\models\Part;
 use alsvanzelf\debugtoolbar\models\Metric;
 
@@ -23,6 +25,9 @@ class Display {
 			$this->getRequestPart($this->log->extra),
 			$this->getPDOPart($this->log->extra),
 		];
+		$details = [
+			new PDORecordsDetail($this->log->extra),
+		];
 		
 		$options = [
 			'partials' => [
@@ -35,12 +40,22 @@ class Display {
 			'collapse' => $this->options['collapse'],
 			'log'      => $this->log,
 			'parts'    => $parts,
+			'details'  => $details,
 		];
 		
 		$mustache = new \Mustache_Engine($options);
 		$rendered = $mustache->render($template, $data);
 		
 		return $rendered;
+	}
+	
+	public function renderDetail($detailKey) {
+		$details = [
+			'pdo_records' => new PDORecordsDetail($this->log->extra),
+		];
+		$detail = $details[$detailKey];
+		
+		return $detail->render();
 	}
 	
 	private function getRequestPart($logData) {
@@ -123,7 +138,7 @@ class Display {
 		}
 		
 		$metrics = [
-			new Metric('All',     count($logData->pdo_queries).' queries', $featured=true),
+			new Metric('All',     count($logData->pdo_queries).' queries', $featured=true, $alert=null, $detail=new PDORecordsDetail($logData)),
 			new Metric('Similar', $similarCount.' queries, at most '.$similarHighest.' times', $featured=false, $similarAlert),
 			new Metric('Equal',   $equalCount.' queries, at most '.$equalHighest.' times', $featured=false, $equalAlert),
 		];

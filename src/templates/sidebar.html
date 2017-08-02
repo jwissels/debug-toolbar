@@ -31,7 +31,14 @@
 							<tr {{# collapse}}{{# hasAlertMetrics}}{{^ alert}}class="collapse collapse_part_{{key}}_metrics"{{/ alert}}{{/ hasAlertMetrics}}{{/ collapse}}>
 								<th>{{title}}</th>
 								<td>
-									{{& value}}
+									{{# detail}}
+										<a href="#" data-detail-key="{{key}}">
+											{{& value}}
+										</a>
+									{{/ detail}}
+									{{^ detail}}
+										{{& value}}
+									{{/ detail}}
 									{{# alert}}
 										<br>
 										<span class="text-danger">

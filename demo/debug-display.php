@@ -19,4 +19,10 @@ $cursor = $mongo->demo->debug->find($query=['context.logId' => $_GET['logId']]);
 $results = $cursor->toArray();
 
 $display = new Display($results[0]);
-echo $display->renderSidebar();
+
+if (isset($_GET['detail'])) {
+	echo $display->renderDetail($_GET['detail']);
+}
+else {
+	echo $display->render();
+}
