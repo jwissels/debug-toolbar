@@ -5,6 +5,16 @@ namespace alsvanzelf\debugtoolbar\models;
 class Detail {
 	public $key = '';
 	
+	public $mode = 'full';
+	
+	public function __construct($key, $mode='full') {
+		$this->key  = $key;
+		$this->mode = $mode;
+	}
+	
+	/*
+	public $key = '';
+	
 	public $title = '';
 	
 	protected $logData = [];
@@ -24,4 +34,5 @@ class Detail {
 		
 		return $rendered;
 	}
+	*/
 }

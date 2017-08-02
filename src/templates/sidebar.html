@@ -29,19 +29,19 @@
 					<table class="table panel-body">
 						{{# metrics}}
 							<tr class="{{^ isAvailable}}text-muted{{/ isAvailable}} {{# collapse}}{{# hasAlertMetrics}}{{^ alert}}collapse collapse_part_{{key}}_metrics{{/ alert}}{{/ hasAlertMetrics}}{{/ collapse}}">
-								<th>{{title}}</th>
+								<th class="fixed-width">{{title}}</th>
 								<td>
 									{{^ isAvailable}}
 										&mdash;
 									{{/ isAvailable}}
-									{{# detail}}
-										<a href="#" data-detail-key="{{key}}">
+									{{# hasDetail}}
+										<a href="#" data-detail="true" data-part-name="{{name}}" data-detail-key="{{detail.key}}" data-detail-mode="{{detail.mode}}">
 											{{& value}}
 										</a>
-									{{/ detail}}
-									{{^ detail}}
+									{{/ hasDetail}}
+									{{^ hasDetail}}
 										{{& value}}
-									{{/ detail}}
+									{{/ hasDetail}}
 									{{# alert}}
 										<br>
 										<span class="text-danger">

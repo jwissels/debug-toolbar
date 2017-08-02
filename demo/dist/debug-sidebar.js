@@ -15,16 +15,15 @@ window.onload = function() {
 	/**
 	 * open the detail
 	 */
-	var detailLinks = document.querySelectorAll('[data-detail-key]');
+	var detailLinks = document.querySelectorAll('[data-detail="true"]');
 	for (var i=0; i<detailLinks.length; i++) {
 		var detailLink = detailLinks[i];
+		var partName   = detailLink.dataset.partName;
 		var detailKey  = detailLink.dataset.detailKey;
+		var detailMode = detailLink.dataset.detailMode;
 		detailLink.addEventListener('click', function(event) {
 			event.preventDefault();
-			if (top.window.extendDebugDisplay != undefined) {
-				top.window.extendDebugDisplay(detailKey);
-			}
-			showDebugDetail(detailKey);
+			toggleDebugDetail(partName, detailKey, detailMode);
 		});
 	}
 }

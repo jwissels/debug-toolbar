@@ -43,7 +43,7 @@ class Log {
 		];
 	}
 	
-	public static function handle(LoggerInterface $logger) {
+	public static function track(LoggerInterface $logger) {
 		self::$logId = uniqid();
 		
 		/**

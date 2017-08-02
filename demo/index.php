@@ -29,7 +29,7 @@ $logger = new Logger($channel='demo');
 $logger->pushHandler(new MongoDBHandler(new Client('mongodb://127.0.0.1:27017'), $database='demo', $collection='debug'));
 
 // store the requests data in the log
-$logId = Log::handle($logger);
+$logId = Log::track($logger);
 
 /**
  * render the toggler in the template

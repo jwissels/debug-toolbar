@@ -4,8 +4,8 @@ namespace alsvanzelf\debugtoolbar;
 
 use alsvanzelf\debugtoolbar\models\Detail;
 use alsvanzelf\debugtoolbar\models\PDORecordsDetail;
-use alsvanzelf\debugtoolbar\models\Part;
 use alsvanzelf\debugtoolbar\models\Metric;
+use alsvanzelf\debugtoolbar\parts\RequestPart;
 
 class Display {
 	private $log;
@@ -22,11 +22,12 @@ class Display {
 	
 	public function render() {
 		$parts = [
-			$this->getRequestPart($this->log->extra),
-			$this->getPDOPart($this->log->extra),
+			new RequestPart($this->log->extra),
+			#$this->getRequestPart($this->log->extra),
+			#$this->getPDOPart($this->log->extra),
 		];
 		$details = [
-			new PDORecordsDetail($this->log->extra),
+			#new PDORecordsDetail($this->log->extra),
 		];
 		
 		$options = [
@@ -49,7 +50,16 @@ class Display {
 		return $rendered;
 	}
 	
-	public function renderDetail($detailKey) {
+	public function renderDetail($detailRequest) {
+		list($partName, $detailKey, $detailMode) = explode('|', $detailRequest);
+		
+		$className = '\alsvanzelf\debugtoolbar\parts\\'.$partName.'Part';
+		$part      = new $className($this->log->extra);
+		
+		return $part->detail($detailKey, $detailMode);
+		
+		
+		
 		$details = [
 			'pdo_records' => new PDORecordsDetail($this->log->extra),
 		];
@@ -161,20 +171,5 @@ class Display {
 		];
 		
 		return new Part('PDO', ...$metrics);
-	}
-	
-	public static function stringToBytes($byteString) {
-		preg_match('{(?<bytes>[0-9]+) ?(?<unit>[A-Z])}', $byteString, $match);
-		$bytes = (int) $match['bytes'];
-		
-		if (empty($match['unit'])) {
-			return $bytes;
-		}
-		
-		$units    = ['K'=>1, 'M'=>2, 'G'=>3, 'T'=>4];
-		$exponent = $units[$match['unit']];
-		$bytes    = $bytes * pow(1024, $exponent);
-		
-		return $bytes;
 	}
 }
