@@ -19,7 +19,9 @@ class PDORecordsDetail extends Detail {
 		 * @todo use a better formatter, i.e. https://github.com/zeroturnaround/sql-formatter
 		 */
 		foreach ($allRecords as &$record) {
-			$record['query'] = preg_replace('{\s(FROM|JOIN|WHERE|AND|OR|ORDER BY|GROUP BY|LIMIT)(\s)}', "\n$1$2", $record['query']);
+			if (strpos($record['query'], "\n") === false) {
+				$record['query'] = preg_replace('{\s(FROM|JOIN|WHERE|AND|OR|ORDER BY|GROUP BY|LIMIT)(\s)}', "\n$1$2", $record['query']);
+			}
 			
 			$record['hasBinds'] = (!empty($record['binds']));
 			if ($record['hasBinds'] === false) {
