@@ -11,4 +11,20 @@ window.onload = function() {
 			accordionLink.click();
 		});
 	}
+	
+	/**
+	 * open the detail
+	 */
+	var detailLinks = document.querySelectorAll('[data-detail-key]');
+	for (var i=0; i<detailLinks.length; i++) {
+		var detailLink = detailLinks[i];
+		var detailKey  = detailLink.dataset.detailKey;
+		detailLink.addEventListener('click', function(event) {
+			event.preventDefault();
+			if (top.window.extendDebugDisplay != undefined) {
+				top.window.extendDebugDisplay(detailKey);
+			}
+			showDebugDetail(detailKey);
+		});
+	}
 }
