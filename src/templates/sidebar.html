@@ -10,7 +10,7 @@
 			<div class="panel panel-{{# hasAlertMetrics}}danger{{/ hasAlertMetrics}}{{^ hasAlertMetrics}}default{{/ hasAlertMetrics}}">
 				<div class="panel-heading" role="tab" id="part_{{key}}">
 					<h4 class="panel-title">
-						<a class="{{# collapse}}collapsed{{/ collapse}}" role="button" data-toggle="collapse" data-parent="#accordion" href=".collapse_part_{{key}}" aria-expanded="{{# collapse}}false{{/ collapse}}{{^ collapse}}true{{/ collapse}}" aria-controls="collapse_part_{{key}}">
+						<a class="{{# collapse}}collapsed{{/ collapse}}" role="button" data-toggle="collapse" {{# collapse}} data-parent="#accordion"{{/ collapse}} href=".collapse_part_{{key}}" aria-expanded="{{# collapse}}false{{/ collapse}}{{^ collapse}}true{{/ collapse}}" aria-controls="collapse_part_{{key}}">
 							{{title}}
 						</a>
 					</h4>
