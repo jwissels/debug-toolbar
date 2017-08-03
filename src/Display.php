@@ -49,7 +49,12 @@ class Display {
 		$className = '\alsvanzelf\debugtoolbar\parts\\'.$partName.'Part';
 		$part      = new $className($this->log->extra);
 		$detail    = new Detail($detailKey, $detailMode);
+		$data     = $part->detail($detail);
+		$template = file_get_contents(__DIR__.'/templates/'.strtolower($partName).'/'.$detail->key.'.html');
 		
-		return $part->detail($detail);
+		$mustache = new \Mustache_Engine();
+		$rendered = $mustache->render($template, $data);
+		
+		return $rendered;
 	}
 }

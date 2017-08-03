@@ -102,13 +102,6 @@ class PDOPart extends PartAbstract implements PartInterface {
 	}
 	
 	public function detail(Detail $detail) {
-		switch ($detail->key) {
-			case 'records': return $this->detailRecords();
-			default:        throw new Exception('unknown detail key');
-		}
-	}
-	
-	private function detailRecords() {
 		$allRecords = json_decode(json_encode($this->logData->pdo_queries), true);
 		
 		/**
@@ -134,14 +127,10 @@ class PDOPart extends PartAbstract implements PartInterface {
 			$record['binds'] = array_values((array) $record['binds']);
 		}
 		
-		$template = file_get_contents(__DIR__.'/../templates/details/pdo_records.html');
-		$data     = [
+		$data = [
 			'allRecords' => $allRecords,
 		];
 		
-		$mustache = new \Mustache_Engine();
-		$rendered = $mustache->render($template, $data);
-		
-		return $rendered;
+		return $data;
 	}
 }

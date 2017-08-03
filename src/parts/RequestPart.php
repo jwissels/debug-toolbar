@@ -77,16 +77,12 @@ class RequestPart extends PartAbstract implements PartInterface {
 	}
 	
 	private function detailMemory() {
-		$template = file_get_contents(__DIR__.'/../templates/details/request_memory.html');
-		$data     = [
+		$data = [
 			'memoryCurrentMetric' => $this->metricMemoryCurrent(),
 			'memoryPeakMetric'    => $this->metricMemoryPeak($detail=true),
 		];
 		
-		$mustache = new \Mustache_Engine();
-		$rendered = $mustache->render($template, $data);
-		
-		return $rendered;
+		return $data;
 	}
 	
 	private function metricMemoryCurrent() {
