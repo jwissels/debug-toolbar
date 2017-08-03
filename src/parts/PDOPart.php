@@ -101,8 +101,8 @@ class PDOPart extends PartAbstract implements PartInterface {
 		return $metrics;
 	}
 	
-	public function detail($detailKey, $detailMode) {
-		switch ($detailKey) {
+	public function detail(Detail $detail) {
+		switch ($detail->key) {
 			case 'records': return $this->detailRecords();
 			default:        throw new Exception('unknown detail key');
 		}

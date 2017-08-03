@@ -57,7 +57,7 @@ class RequestPart extends PartAbstract implements PartInterface {
 			$requestType .= ' <span class="label label-default">'.$this->logData->request_type.'</span>';
 		}
 		
-		$memoryDetail = new Detail($key='memory', $mode='inline');
+		$memoryDetail = new Detail($key='memory', $mode=Detail::MODE_INLINE);
 		
 		$metrics = [
 			new Metric('Request',  $requestMethod.$this->logData->url.$requestType),
@@ -69,8 +69,8 @@ class RequestPart extends PartAbstract implements PartInterface {
 		return $metrics;
 	}
 	
-	public function detail($detailKey, $detailMode) {
-		switch ($detailKey) {
+	public function detail(Detail $detail) {
+		switch ($detail->key) {
 			case 'memory': return $this->detailMemory();
 			default:       throw new Exception('unknown detail key');
 		}
@@ -101,7 +101,7 @@ class RequestPart extends PartAbstract implements PartInterface {
 		$value    = ($detail) ? $this->logData->memory_peak_usage : $this->logData->memory_peak_usage.' (peak)';
 		$featured = true;
 		$alert    = (self::stringToBytes($this->logData->memory_peak_usage) > self::stringToBytes(ini_get('memory_limit')) / 4) ? '> 25% of set memory limit ('.ini_get('memory_limit').')' : null;
-		$detail   = new Detail($key='memory', $mode='inline');
+		$detail   = new Detail($key='memory', $mode=Detail::MODE_INLINE);
 		
 		$metric = new Metric($title, $value, $featured, $alert, $detail);
 		
