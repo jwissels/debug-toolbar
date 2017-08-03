@@ -2,15 +2,13 @@
 
 namespace alsvanzelf\debugtoolbar\models;
 
-use Monolog\Logger;
-
 /**
  * @todo add addMetric()
  */
 interface PartInterface {
 	public function __construct($logData);
 	
-	public static function track(Logger $logger);
+	public static function track();
 	
 	public function name();
 	

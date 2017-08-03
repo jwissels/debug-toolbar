@@ -20,8 +20,8 @@ class Display {
 	
 	public function render() {
 		$parts = [
-			new RequestPart($this->log->extra),
-			new PDOPart($this->log->extra),
+			new RequestPart($this->log->extra->request),
+			new PDOPart($this->log->extra->pdo),
 		];
 		
 		$options = [
@@ -46,11 +46,15 @@ class Display {
 	public function renderDetail($detailRequest) {
 		list($partName, $detailKey, $detailMode) = explode('|', $detailRequest);
 		
+		$partKey  = strtolower($partName);
+		$partData = $this->log->extra->{$partKey};
+		$detail   = new Detail($detailKey, $detailMode);
+		
 		$className = '\alsvanzelf\debugtoolbar\parts\\'.$partName.'Part';
-		$part      = new $className($this->log->extra);
-		$detail    = new Detail($detailKey, $detailMode);
+		$part      = new $className($partData);
+		
+		$template = file_get_contents(__DIR__.'/templates/'.$partKey.'/'.$detail->key.'.html');
 		$data     = $part->detail($detail);
-		$template = file_get_contents(__DIR__.'/templates/'.strtolower($partName).'/'.$detail->key.'.html');
 		
 		$mustache = new \Mustache_Engine();
 		$rendered = $mustache->render($template, $data);

@@ -2,12 +2,11 @@
 
 namespace alsvanzelf\debugtoolbar\parts;
 
+use alsvanzelf\debugtoolbar\Log;
 use alsvanzelf\debugtoolbar\models\Detail;
 use alsvanzelf\debugtoolbar\models\Metric;
 use alsvanzelf\debugtoolbar\models\PartAbstract;
 use alsvanzelf\debugtoolbar\models\PartInterface;
-use alsvanzelf\debugtoolbar\processors\PDOQueryProcessor;
-use Monolog\Logger;
 
 /**
  * @todo add process() (store a processed version for easier display and re-usage between methods)
@@ -21,12 +20,14 @@ class PDOPart extends PartAbstract implements PartInterface {
 		return 'PDO';
 	}
 	
-	public static function track(Logger $logger) {
-		$logger->pushProcessor(new PDOQueryProcessor());
+	public static function track() {
+		return [
+			'queries' => Log::$trackedPDOQueries,
+		];
 	}
 	
 	public function metrics() {
-		$allCount     = count($this->logData->pdo_queries);
+		$allCount     = count($this->logData->queries);
 		
 		$similarKeys    = [];
 		$similarQueries = [];
@@ -34,7 +35,7 @@ class PDOPart extends PartAbstract implements PartInterface {
 		$equalKeys      = [];
 		$equalQueries   = [];
 		$equalHighest   = 0;
-		foreach ($this->logData->pdo_queries as $queryData) {
+		foreach ($this->logData->queries as $queryData) {
 			$similarKey = md5($queryData['query']);
 			$equalKey   = md5($queryData['query'].serialize($queryData['binds']));
 			
@@ -102,7 +103,7 @@ class PDOPart extends PartAbstract implements PartInterface {
 	}
 	
 	public function detail(Detail $detail) {
-		$allRecords = json_decode(json_encode($this->logData->pdo_queries), true);
+		$allRecords = json_decode(json_encode($this->logData->queries), true);
 		
 		/**
 		 * - duct-tape formatting for queries

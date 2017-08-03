@@ -2,14 +2,8 @@
 
 namespace alsvanzelf\debugtoolbar;
 
-use alsvanzelf\debugtoolbar\processors\PDOQueryProcessor;
-use alsvanzelf\debugtoolbar\processors\RequestTimeProcessor;
-use alsvanzelf\debugtoolbar\processors\RequestTypeProcessor;
-use Monolog\Processor\GitProcessor;
-use Monolog\Processor\MemoryPeakUsageProcessor;
-use Monolog\Processor\MemoryUsageProcessor;
-use Monolog\Processor\ProcessIdProcessor;
-use Monolog\Processor\WebProcessor;
+use alsvanzelf\debugtoolbar\parts\PDOPart;
+use alsvanzelf\debugtoolbar\parts\RequestPart;
 use Psr\Log\LoggerInterface;
 
 class Log {
@@ -46,20 +40,12 @@ class Log {
 	public static function track(LoggerInterface $logger) {
 		self::$logId = uniqid();
 		
-		/**
-		 * request processors
-		 */
-		$logger->pushProcessor(new GitProcessor());
-		$logger->pushProcessor(new MemoryPeakUsageProcessor());
-		$logger->pushProcessor(new MemoryUsageProcessor());
-		$logger->pushProcessor(new RequestTimeProcessor());
-		$logger->pushProcessor(new RequestTypeProcessor());
-		$logger->pushProcessor(new WebProcessor());
-		
-		/**
-		 * PDO processors
-		 */
-		$logger->pushProcessor(new PDOQueryProcessor());
+		$logger->pushProcessor(function(array $record) {
+			$record['extra']['request'] = RequestPart::track();
+			$record['extra']['pdo']     = PDOPart::track();
+			
+			return $record;
+		});
 		
 		/**
 		 * log
