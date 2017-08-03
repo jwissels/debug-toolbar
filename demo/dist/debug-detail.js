@@ -20,13 +20,20 @@ var toggleDebugDetail = function(partName, detailKey, detailMode) {
 	}
 	else {
 		loadDebugDetail(partName, detailKey, detailMode, function(data) {
+			$('#detail-container').addClass('detail-active');
 			$('#detail-container').html(data);
 		});
 	}
 }
 
 var loadDebugDetail = function(partName, detailKey, detailMode, callback) {
-	var url = window.location.href + '&detail=' + partName + '|' + detailKey + '|' + detailMode;
+	/**
+	 * convert to a single detail key to pass to the backend
+	 * this keeps the backend simple, which needs manual implementation
+	 */
+	var detailKey = partName + '|' + detailKey + '|' + detailMode;
+	var url       = window.location.href + '&detail=' + detailKey;
+	
 	$.get(url).done(function(data, textStatus, jqXHR){
 		callback(data);
 	});

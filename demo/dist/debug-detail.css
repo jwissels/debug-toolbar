@@ -3,3 +3,9 @@
 	margin: 25px;
 	margin-right: calc(25px + 450px);
 }
+#detail-container {
+	display: none;
+}
+#detail-container.detail-active {
+	display: block;
+}
