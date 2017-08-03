@@ -6,11 +6,11 @@ setTimeout(function() {
 }, 100);
 
 /**
- * close the display
+ * allow the parent to close the detail
+ * @see https://stackoverflow.com/a/251645/230422
  */
-var closeDebugDisplay = function() {
-	top.window.closeDebugDisplay();
-	
+// overwrite the placeholder
+window.parent.iframeCloseDebugCallback = function() {
 	// keep the animation calm by first closing the display completely
 	setTimeout(function() {
 		$('#detail-container, .detail-container').removeClass('detail-active');
@@ -25,10 +25,10 @@ var closeDebugDisplay = function() {
 window.addEventListener('keydown', function(event) {
 	if (event.ctrlKey == false && event.altKey == false && event.shiftKey && event.keyCode == 68) {
 		event.preventDefault();
-		closeDebugDisplay();
+		parent.window.closeDebugDisplay();
 	}
 	if (event.ctrlKey == false && event.altKey == false && event.shiftKey == false && event.keyCode == 27) {
 		event.preventDefault();
-		closeDebugDisplay();
+		parent.window.closeDebugDisplay();
 	}
 });

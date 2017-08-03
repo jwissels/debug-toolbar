@@ -90,6 +90,9 @@ window.onload = function() {
 		toggleElement.className = '';
 		toggleInnerElement.innerHTML = '&lsaquo;';
 		displayIframeElement.blur();
+		iframeCloseDebugCallback();
 	};
 	toggleElement.addEventListener('click', toggleDebugDisplay, false);
+	
+	window.iframeCloseDebugCallback = function() {};
 }

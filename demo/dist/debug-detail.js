@@ -1,6 +1,11 @@
+/**
+ * open/close the detail
+ * 
+ * @note closing only happens for inline details
+ */
 var toggleDebugDetail = function(partName, detailKey, detailMode) {
-	if (detailMode != 'inline' && top.window.extendDebugDisplay != undefined) {
-		top.window.extendDebugDisplay();
+	if (detailMode != 'inline' && parent.window.extendDebugDisplay != undefined) {
+		parent.window.extendDebugDisplay();
 	}
 	
 	if (detailMode == 'inline') {
