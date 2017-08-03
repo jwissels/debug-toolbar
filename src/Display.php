@@ -5,6 +5,7 @@ namespace alsvanzelf\debugtoolbar;
 use alsvanzelf\debugtoolbar\models\Detail;
 use alsvanzelf\debugtoolbar\models\PDORecordsDetail;
 use alsvanzelf\debugtoolbar\models\Metric;
+use alsvanzelf\debugtoolbar\parts\PDOPart;
 use alsvanzelf\debugtoolbar\parts\RequestPart;
 
 class Display {
@@ -23,6 +24,7 @@ class Display {
 	public function render() {
 		$parts = [
 			new RequestPart($this->log->extra),
+			new PDOPart($this->log->extra),
 			#$this->getRequestPart($this->log->extra),
 			#$this->getPDOPart($this->log->extra),
 		];
