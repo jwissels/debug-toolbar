@@ -7,61 +7,65 @@
 	</header>
 	<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 		{{# parts}}
-			<div class="panel panel-{{# hasAlertMetrics}}danger{{/ hasAlertMetrics}}{{^ hasAlertMetrics}}default{{/ hasAlertMetrics}}">
+			<div class="panel panel-{{# hasActiveAlerts}}danger{{/ hasActiveAlerts}}{{^ hasActiveAlerts}}default{{/ hasActiveAlerts}}">
 				<div class="panel-heading" role="tab" id="part_{{key}}">
 					<h4 class="panel-title">
 						<a class="{{# collapse}}collapsed{{/ collapse}}" role="button" data-toggle="collapse" {{# collapse}} data-parent="#accordion"{{/ collapse}} href=".collapse_part_{{key}}" aria-expanded="{{# collapse}}false{{/ collapse}}{{^ collapse}}true{{/ collapse}}" aria-controls="collapse_part_{{key}}">
 							{{title}}
 						</a>
 					</h4>
-					<ul class="list-inline small">
-						{{# featuredMetrics}}
-							{{# alert}}
-								<li class="text-danger" title="{{title}}"><strong>{{value}}</strong></li>
-							{{/ alert}}
-							{{^ alert}}
-								<li class="text-muted" title="{{title}}">{{value}}</li>
-							{{/ alert}}
-						{{/ featuredMetrics}}
-					</ul>
+					{{# hasFeaturedMetrics}}
+						<ul class="list-inline small">
+							{{# featuredMetrics}}
+								{{# alert}}
+									<li class="text-danger" title="{{title}}"><strong>{{value}}</strong></li>
+								{{/ alert}}
+								{{^ alert}}
+									<li class="text-muted" title="{{title}}">{{value}}</li>
+								{{/ alert}}
+							{{/ featuredMetrics}}
+						</ul>
+					{{/ hasFeaturedMetrics}}
 				</div>
-				<div class="collapse_part_{{key}} panel-collapse collapse {{^ collapse}}in{{/ collapse}}{{# collapse}}{{# hasAlertMetrics}}in{{/ hasAlertMetrics}}{{/ collapse}}" role="tabpanel" aria-labelledby="part_{{key}}">
+				<div class="collapse_part_{{key}} panel-collapse collapse {{^ collapse}}in{{/ collapse}}{{# collapse}}{{# hasActiveAlerts}}in{{/ hasActiveAlerts}}{{/ collapse}}" role="tabpanel" aria-labelledby="part_{{key}}">
 					<table class="table panel-body">
 						{{# metrics}}
-							<tr class="{{^ isAvailable}}text-muted{{/ isAvailable}} {{# collapse}}{{# hasAlertMetrics}}{{^ alert}}collapse collapse_part_{{key}}_metrics{{/ alert}}{{/ hasAlertMetrics}}{{/ collapse}}">
-								<th>{{title}}</th>
+							<tr class="{{^ isAvailable}}text-muted{{/ isAvailable}} {{# collapse}}{{# hasActiveAlerts}}{{^ alert}}collapse collapse_part_{{key}}_metrics{{/ alert}}{{/ hasActiveAlerts}}{{/ collapse}}">
+								<th class="fixed-width">{{title}}</th>
 								<td>
+									{{# isAvailable}}
+										{{# hasDetail}}
+											<a href="#" data-detail="true" data-part-name="{{name}}" data-detail-key="{{detail.key}}" data-detail-mode="{{detail.mode}}">
+												{{& value}}
+											</a>
+										{{/ hasDetail}}
+										{{^ hasDetail}}
+											{{& value}}
+										{{/ hasDetail}}
+										{{# alert}}
+											<br>
+											<span class="text-danger">
+												<i class="fa fa-exclamation-triangle"></i>&nbsp;
+												<strong>{{alert}}</strong>
+											</span>
+										{{/ alert}}
+									{{/ isAvailable}}
 									{{^ isAvailable}}
 										&mdash;
 									{{/ isAvailable}}
-									{{# detail}}
-										<a href="#" data-detail-key="{{key}}">
-											{{& value}}
-										</a>
-									{{/ detail}}
-									{{^ detail}}
-										{{& value}}
-									{{/ detail}}
-									{{# alert}}
-										<br>
-										<span class="text-danger">
-											<i class="fa fa-exclamation-triangle"></i>&nbsp;
-											<strong>{{alert}}</strong>
-										</span>
-									{{/ alert}}
 								</td>
 							</tr>
 						{{/ metrics}}
 					</table>
 					{{# collapse}}
-						{{# hasAlertMetrics}}
+						{{# hasActiveAlerts}}
 							<div class="alert-collapse-metrics">
 								<a href="#" data-toggle="collapse" data-target=".collapse_part_{{key}}_metrics" aria-expanded="{{# collapse}}false{{/ collapse}}{{^ collapse}}true{{/ collapse}}" aria-controls="collapse_part_{{key}}_metrics">
 									<span class="collapse collapse_part_{{key}}_metrics in">Show all</span>
 									<span class="collapse collapse_part_{{key}}_metrics">Hide non-alerts</span>
 								</a>
 							</div>
-						{{/ hasAlertMetrics}}
+						{{/ hasActiveAlerts}}
 					{{/ collapse}}
 				</div>
 			</div>

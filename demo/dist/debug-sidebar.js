@@ -3,11 +3,13 @@ window.onload = function() {
 	 * make accordion headings clickable, not only the link inside them
 	 */
 	var accordionTitles = document.getElementsByClassName('panel-heading');
+	var accordionTitle  = null;
+	var accordionLink   = null;
 	for (var i=0; i<accordionTitles.length; i++) {
-		var accordionTitle = accordionTitles[i];
+		accordionTitle = accordionTitles[i];
 		accordionTitle.className = accordionTitle.className + ' clickable';
 		accordionTitle.addEventListener('click', function(event) {
-			var accordionLink = this.querySelectorAll('[data-toggle="collapse"]')[0];
+			accordionLink = this.querySelectorAll('[data-toggle="collapse"]')[0];
 			accordionLink.click();
 		});
 	}
@@ -15,16 +17,13 @@ window.onload = function() {
 	/**
 	 * open the detail
 	 */
-	var detailLinks = document.querySelectorAll('[data-detail-key]');
+	var detailLinks = document.querySelectorAll('[data-detail="true"]');
+	var detailLink  = null;
 	for (var i=0; i<detailLinks.length; i++) {
-		var detailLink = detailLinks[i];
-		var detailKey  = detailLink.dataset.detailKey;
+		detailLink = detailLinks[i];
 		detailLink.addEventListener('click', function(event) {
 			event.preventDefault();
-			if (top.window.extendDebugDisplay != undefined) {
-				top.window.extendDebugDisplay(detailKey);
-			}
-			showDebugDetail(detailKey);
+			toggleDebugDetail(this.dataset.partName, this.dataset.detailKey, this.dataset.detailMode);
 		});
 	}
 }

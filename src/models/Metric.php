@@ -26,4 +26,8 @@ class Metric {
 	public function isAvailable() {
 		return ($this->value !== null);
 	}
+	
+	public function hasDetail() {
+		return ($this->detail !== null);
+	}
 }

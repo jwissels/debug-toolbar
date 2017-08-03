@@ -44,7 +44,7 @@ header {
 	font-weight: normal;
 }
 
-.table th {
+.table th.fixed-width {
 	width: 25%;
 	min-width: 100px;
 	max-width: 150px;
@@ -53,4 +53,15 @@ header {
 .alert-collapse-metrics {
 	padding: 10px;
 	border-top: 1px solid #DDDDDD;
+}
+
+.detail-container {
+	display: none;
+}
+.detail-container.detail-active {
+	display: block;
+}
+.detail-container .table {
+	margin-top: 20px;
+	margin-bottom: 0;
 }
