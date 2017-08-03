@@ -7,7 +7,7 @@ setTimeout(function() {
 
 /**
  * allow the parent to close the detail
- * @see https://stackoverflow.com/a/251645/230422
+ * @see https://stackoverflow.com/questions/251420/invoking-javascript-code-in-an-iframe-from-the-parent-page/251645#251645
  */
 if (window.parent.iframeCloseDebugCallback != undefined) {
 	// overwrite the placeholder
