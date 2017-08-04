@@ -4,10 +4,13 @@ namespace alsvanzelf\debugtoolbar;
 
 use alsvanzelf\debugtoolbar\parts\PDOPart;
 use alsvanzelf\debugtoolbar\parts\RequestPart;
+use alsvanzelf\debugtoolbar\parts\TwigPart;
 use Psr\Log\LoggerInterface;
 
 class Log {
 	public static $trackedPDOQueries = [];
+	
+	public static $trackedTwigProfiler = null;
 	
 	private static $logId = null;
 	
@@ -37,12 +40,17 @@ class Log {
 		];
 	}
 	
+	public static function trackTwigProfiler(\Twig_Profiler_Profile $profiler) {
+		self::$trackedTwigProfiler = $profiler;
+	}
+	
 	public static function track(LoggerInterface $logger) {
 		self::$logId = uniqid();
 		
 		$logger->pushProcessor(function(array $record) {
 			$record['extra']['request'] = RequestPart::track();
 			$record['extra']['pdo']     = PDOPart::track();
+			$record['extra']['twig']    = TwigPart::track();
 			
 			return $record;
 		});

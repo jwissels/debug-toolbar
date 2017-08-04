@@ -5,6 +5,7 @@ namespace alsvanzelf\debugtoolbar;
 use alsvanzelf\debugtoolbar\models\Detail;
 use alsvanzelf\debugtoolbar\parts\PDOPart;
 use alsvanzelf\debugtoolbar\parts\RequestPart;
+use alsvanzelf\debugtoolbar\parts\TwigPart;
 
 class Display {
 	private $log;
@@ -22,6 +23,7 @@ class Display {
 		$parts = [
 			new RequestPart($this->log->extra->request),
 			new PDOPart($this->log->extra->pdo),
+			new TwigPart($this->log->extra->twig),
 		];
 		
 		$options = [

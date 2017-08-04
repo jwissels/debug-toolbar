@@ -73,7 +73,7 @@ class RequestPart extends PartAbstract implements PartInterface {
 	private function detailMemory() {
 		$data = [
 			'memoryCurrentMetric' => $this->metricMemoryCurrent(),
-			'memoryPeakMetric'    => $this->metricMemoryPeak($detail=true),
+			'memoryPeakMetric'    => $this->metricMemoryPeak($forDetail=true),
 		];
 		
 		return $data;
@@ -86,9 +86,9 @@ class RequestPart extends PartAbstract implements PartInterface {
 		return $metric;
 	}
 	
-	private function metricMemoryPeak($detail=false) {
-		$title    = ($detail) ? 'Peak' : 'Memory';
-		$value    = ($detail) ? $this->logData->memory_peak : $this->logData->memory_peak.' (peak)';
+	private function metricMemoryPeak($forDetail=false) {
+		$title    = ($forDetail) ? 'Peak' : 'Memory';
+		$value    = ($forDetail) ? $this->logData->memory_peak : $this->logData->memory_peak.' (peak)';
 		$featured = true;
 		$alert    = (self::memoryStringToBytes($this->logData->memory_peak) > self::memoryStringToBytes(ini_get('memory_limit')) / 4) ? '> 25% of set memory limit ('.ini_get('memory_limit').')' : null;
 		$detail   = new Detail($key='memory', $mode=Detail::MODE_INLINE);
