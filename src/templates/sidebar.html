@@ -9,9 +9,9 @@
 		{{# parts}}
 			{{# isAvailable}}
 				<div class="panel panel-{{# hasActiveAlerts}}danger{{/ hasActiveAlerts}}{{^ hasActiveAlerts}}default{{/ hasActiveAlerts}}">
-					<div class="panel-heading" role="tab" id="part_{{key}}">
+					<div class="panel-heading" role="tab" id="part_{{name}}">
 						<h4 class="panel-title">
-							<a class="{{# collapse}}collapsed{{/ collapse}}" role="button" data-toggle="collapse" {{# collapse}} data-parent="#accordion"{{/ collapse}} href=".collapse_part_{{key}}" aria-expanded="{{# collapse}}false{{/ collapse}}{{^ collapse}}true{{/ collapse}}" aria-controls="collapse_part_{{key}}">
+							<a class="{{# collapse}}collapsed{{/ collapse}}" role="button" data-toggle="collapse" {{# collapse}} data-parent="#accordion"{{/ collapse}} href=".collapse_part_{{name}}" aria-expanded="{{# collapse}}false{{/ collapse}}{{^ collapse}}true{{/ collapse}}" aria-controls="collapse_part_{{name}}">
 								{{title}}
 							</a>
 						</h4>
@@ -28,10 +28,10 @@
 							</ul>
 						{{/ hasFeaturedMetrics}}
 					</div>
-					<div class="collapse_part_{{key}} panel-collapse collapse {{^ collapse}}in{{/ collapse}}{{# collapse}}{{# hasActiveAlerts}}in{{/ hasActiveAlerts}}{{/ collapse}}" role="tabpanel" aria-labelledby="part_{{key}}">
+					<div class="collapse_part_{{name}} panel-collapse collapse {{^ collapse}}in{{/ collapse}}{{# collapse}}{{# hasActiveAlerts}}in{{/ hasActiveAlerts}}{{/ collapse}}" role="tabpanel" aria-labelledby="part_{{name}}">
 						<table class="table panel-body">
 							{{# metrics}}
-								<tr class="{{^ isAvailable}}text-muted{{/ isAvailable}} {{# collapse}}{{# hasActiveAlerts}}{{^ alert}}collapse collapse_part_{{key}}_metrics{{/ alert}}{{/ hasActiveAlerts}}{{/ collapse}}">
+								<tr class="{{^ isAvailable}}text-muted{{/ isAvailable}} {{# collapse}}{{# hasActiveAlerts}}{{^ alert}}collapse collapse_part_{{name}}_metrics{{/ alert}}{{/ hasActiveAlerts}}{{/ collapse}}">
 									<th class="fixed-width">{{title}}</th>
 									<td>
 										{{# isAvailable}}
@@ -61,9 +61,9 @@
 						{{# collapse}}
 							{{# hasActiveAlerts}}
 								<div class="alert-collapse-metrics">
-									<a href="#" data-toggle="collapse" data-target=".collapse_part_{{key}}_metrics" aria-expanded="{{# collapse}}false{{/ collapse}}{{^ collapse}}true{{/ collapse}}" aria-controls="collapse_part_{{key}}_metrics">
-										<span class="collapse collapse_part_{{key}}_metrics in">Show all</span>
-										<span class="collapse collapse_part_{{key}}_metrics">Hide non-alerts</span>
+									<a href="#" data-toggle="collapse" data-target=".collapse_part_{{name}}_metrics" aria-expanded="{{# collapse}}false{{/ collapse}}{{^ collapse}}true{{/ collapse}}" aria-controls="collapse_part_{{name}}_metrics">
+										<span class="collapse collapse_part_{{name}}_metrics in">Show all</span>
+										<span class="collapse collapse_part_{{name}}_metrics">Hide non-alerts</span>
 									</a>
 								</div>
 							{{/ hasActiveAlerts}}
@@ -73,7 +73,7 @@
 			{{/ isAvailable}}
 			{{^ isAvailable}}
 				<div class="panel panel-default">
-					<div class="panel-heading" role="tab" id="part_{{key}}">
+					<div class="panel-heading" role="tab" id="part_{{name}}">
 						<h4 class="panel-title">
 							{{title}}
 						</h4>
