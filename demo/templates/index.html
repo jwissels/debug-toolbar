@@ -1,0 +1,56 @@
+{% extends 'parent.html' %}
+{% import 'macro.html' as macro %}
+
+{% block body %}
+	<h1>{{ macro.hello('World') }}</h1>
+	
+	<p id="getting-started"></p>
+	
+	{% if posts is not defined or posts is empty %}
+		<p><em>No PDO data available.</em></p>
+		
+		<p>To see PDO debug information, set correct credentials in <code>demo/index.php</code> and add test database and table.</p>
+		<pre>
+CREATE SCHEMA `debug_demo`;
+
+CREATE TABLE `debug_demo`.`posts` (
+	`id` INT NOT NULL AUTO_INCREMENT,
+	`title` VARCHAR(255) NOT NULL,
+	`active` TINYINT(1) NOT NULL DEFAULT '1',
+	PRIMARY KEY (`id`)
+);
+
+INSERT INTO `debug_demo`.`posts` (`title`, `active`) VALUES ('One', '0');
+INSERT INTO `debug_demo`.`posts` (`title`, `active`) VALUES ('Two', '0');
+INSERT INTO `debug_demo`.`posts` (`title`, `active`) VALUES ('Three', '0');
+INSERT INTO `debug_demo`.`posts` (`title`, `active`) VALUES ('Foo', '1');
+		</pre>
+	{% endif %}
+	{% if posts is defined and posts is not empty %}
+		<p>PDO demo data:</p>
+		<table>
+			{% for post in posts %}
+				<tr>
+					{% for value in post %}
+						<td>{{value}}</td>
+					{% endfor %}
+				</tr>
+			{% endfor %}
+		</table>
+	{% endif %}
+{% endblock %}
+
+{% block scripts %}
+	<script type="text/javascript">
+		setTimeout(function() {
+			var gettingStartedMessage = '<strong>Open the debug-toolbar with the arrow in the top right.</strong>';
+			gettingStartedMessage += '<br>Opening/closing can also be done with <kbd>Shift</kbd>+<kbd>D</kbd>, closing with <kbd>Esc</kbd>.';
+			if (document.getElementById('debugtoolbar-toggler') == null) {
+				gettingStartedMessage = 'Hmm, the debug-toolbar failed to load. Best to check the browser\'s console.';
+			}
+			
+			var gettingStartedElement = document.getElementById('getting-started');
+			gettingStartedElement.innerHTML = gettingStartedMessage;
+		}, 500);
+	</script>
+{% endblock %}
