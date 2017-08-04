@@ -10,9 +10,23 @@ abstract class PartAbstract {
 		$this->logData = $logData;
 	}
 	
+	public function isAvailable() {
+		if ($this->logData === null) {
+			return false;
+		}
+		
+		foreach ($this->metrics() as $metric) {
+			if ($metric->isAvailable()) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
 	public function hasFeaturedMetrics() {
 		foreach ($this->metrics() as $metric) {
-			if ($metric->featured === true) {
+			if ($metric->featured === true && $metric->isAvailable()) {
 				return true;
 			}
 		}
@@ -24,7 +38,7 @@ abstract class PartAbstract {
 		$featuredMetrics = [];
 		
 		foreach ($this->metrics() as $metric) {
-			if ($metric->featured === false) {
+			if ($metric->featured === false || $metric->isAvailable() === false) {
 				continue;
 			}
 			
@@ -36,7 +50,7 @@ abstract class PartAbstract {
 	
 	public function hasActiveAlerts() {
 		foreach ($this->metrics() as $metric) {
-			if ($metric->alert !== null) {
+			if ($metric->alert !== null && $metric->isAvailable()) {
 				return true;
 			}
 		}
@@ -48,7 +62,7 @@ abstract class PartAbstract {
 		$alertMetrics = [];
 		
 		foreach ($this->metrics() as $metric) {
-			if ($metric->alert === null) {
+			if ($metric->alert === null && $metric->isAvailable()) {
 				continue;
 			}
 			

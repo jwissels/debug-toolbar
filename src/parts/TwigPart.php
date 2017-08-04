@@ -18,31 +18,23 @@ class TwigPart extends PartAbstract implements PartInterface {
 	}
 	
 	public static function track() {
-		$data = [
-			'count_templates' => null,
-			'count_blocks'    => null,
-			'count_macros'    => null,
-			'duration'        => null,
-			'memory_current'  => null,
-			'memory_peak'     => null,
-			'html_dump'       => null,
-		];
-		
 		$profiler = Log::$trackedTwigProfiler;
-		if ($profiler == null) {
-			return $data;
+		if (empty($profiler) || empty($profiler->getProfiles())) {
+			return null;
 		}
 		
 		$counts = self::countProfileTypes($profiler->getProfiles());
 		$dumper = new \Twig_Profiler_Dumper_Html();
 		
-		$data['count_templates'] = $counts['template'];
-		$data['count_blocks']    = $counts['block'];
-		$data['count_macros']    = $counts['macro'];
-		$data['duration']        = $profiler->getDuration();
-		$data['memory_current']  = self::memoryBytesToString($profiler->getMemoryUsage());
-		$data['memory_peak']     = self::memoryBytesToString($profiler->getPeakMemoryUsage());
-		$data['html_dump']       = $dumper->dump($profiler);
+		$data = [
+			'count_templates' => $counts['template'],
+			'count_blocks'    => $counts['block'],
+			'count_macros'    => $counts['macro'],
+			'duration'        => $profiler->getDuration(),
+			'memory_current'  => self::memoryBytesToString($profiler->getMemoryUsage()),
+			'memory_peak'     => self::memoryBytesToString($profiler->getPeakMemoryUsage()),
+			'html_dump'       => $dumper->dump($profiler),
+		];
 		
 		return $data;
 	}

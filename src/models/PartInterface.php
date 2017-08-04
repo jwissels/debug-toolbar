@@ -16,6 +16,8 @@ interface PartInterface {
 	
 	public function metrics();
 	
+	public function isAvailable();
+	
 	public function hasFeaturedMetrics();
 	
 	public function featuredMetrics();

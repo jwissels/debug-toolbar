@@ -21,13 +21,17 @@ class PDOPart extends PartAbstract implements PartInterface {
 	}
 	
 	public static function track() {
+		if (empty(Log::$trackedPDOQueries)) {
+			return null;
+		}
+		
 		return [
 			'queries' => Log::$trackedPDOQueries,
 		];
 	}
 	
 	public function metrics() {
-		$allCount     = count($this->logData->queries);
+		$allCount = count($this->logData->queries);
 		
 		$similarKeys    = [];
 		$similarQueries = [];

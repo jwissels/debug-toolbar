@@ -36,6 +36,9 @@ header {
 .panel-group .panel-heading .list-inline {
 	margin-top: 10px;
 }
+.panel-group .panel-heading .part-not-available {
+	margin-top: 10px;
+}
 
 .alert .table {
 	margin-bottom: 0;

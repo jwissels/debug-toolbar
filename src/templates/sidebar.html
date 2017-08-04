@@ -7,6 +7,7 @@
 	</header>
 	<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 		{{# parts}}
+			{{# isAvailable}}
 			<div class="panel panel-{{# hasActiveAlerts}}danger{{/ hasActiveAlerts}}{{^ hasActiveAlerts}}default{{/ hasActiveAlerts}}">
 				<div class="panel-heading" role="tab" id="part_{{key}}">
 					<h4 class="panel-title">
@@ -69,6 +70,17 @@
 					{{/ collapse}}
 				</div>
 			</div>
+			{{/ isAvailable}}
+			{{^ isAvailable}}
+				<div class="panel panel-default">
+					<div class="panel-heading" role="tab" id="part_{{key}}">
+						<h4 class="panel-title">
+							{{title}}
+						</h4>
+						<p class="part-not-available small text-muted"><em>No metrics available</em></p>
+					</div>
+				</div>
+			{{/ isAvailable}}
 		{{/ parts}}
 	</div>
 </div>
