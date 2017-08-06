@@ -13,6 +13,8 @@ use alsvanzelf\debugtoolbar\models\PartInterface;
 class PDOPart extends PartAbstract implements PartInterface {
 	public static $trackedQueries = [];
 	
+	private $nonBootstrapQueries = [];
+	
 	public function name() {
 		return 'PDO';
 	}
@@ -58,15 +60,13 @@ class PDOPart extends PartAbstract implements PartInterface {
 	}
 	
 	public function metrics() {
-		$allCount = count($this->logData->queries);
-		
 		$similarKeys    = [];
 		$similarQueries = [];
 		$similarHighest = 0;
 		$equalKeys      = [];
 		$equalQueries   = [];
 		$equalHighest   = 0;
-		foreach ($this->logData->queries as $queryData) {
+		foreach ($this->nonBootstrapQueries() as $queryData) {
 			$similarKey = md5($queryData['query']);
 			$equalKey   = md5($queryData['query'].serialize($queryData['binds']));
 			
@@ -88,8 +88,9 @@ class PDOPart extends PartAbstract implements PartInterface {
 			}
 			
 			$similarKeys[$similarKey] = $queryData;
-			$equalKeys[$equalKey]   = $queryData;
+			$equalKeys[$equalKey]     = $queryData;
 		}
+		$allCount     = count($this->nonBootstrapQueries());
 		$similarCount = count($similarQueries);
 		$equalCount   = count($equalQueries);
 		
@@ -139,15 +140,13 @@ class PDOPart extends PartAbstract implements PartInterface {
 	}
 	
 	public function detail(Detail $detail) {
-		$allRecords = json_decode(json_encode($this->logData->queries), true);
-		
 		/**
 		 * - duct-tape formatting for queries
 		 * - prepare binds for mustache
 		 * 
 		 * @todo use a better formatter, i.e. https://github.com/zeroturnaround/sql-formatter
 		 */
-		foreach ($allRecords as &$record) {
+		foreach ($this->nonBootstrapQueries() as &$record) {
 			if (strpos($record['query'], "\n") === false) {
 				$record['query'] = preg_replace('{\s(FROM|JOIN|WHERE|AND|OR|ORDER BY|GROUP BY|LIMIT)(\s)}', "\n$1$2", $record['query']);
 			}
@@ -165,9 +164,34 @@ class PDOPart extends PartAbstract implements PartInterface {
 		}
 		
 		$data = [
-			'allRecords' => $allRecords,
+			'allRecords' => $this->nonBootstrapQueries(),
 		];
 		
 		return $data;
+	}
+	
+	private function nonBootstrapQueries() {
+		if (empty($this->nonBootstrapQueries)) {
+			if (isset($this->options['bootstrap_query_hashes']) && !empty($this->logData->queries)) {
+				foreach ($this->logData->queries as $queryData) {
+					$queryKey = md5($queryData['query']);
+					
+					if (isset($this->options['bootstrap_query_hashes'][$queryKey])) {
+						// only remove it once
+						// i.e. a user get by id should be allowed after a session check
+						unset($this->options['bootstrap_query_hashes'][$queryKey]);
+						
+						continue;
+					}
+					
+					$this->nonBootstrapQueries[] = $queryData;
+				}
+			}
+			else {
+				$this->nonBootstrapQueries = $this->logData->queries;
+			}
+		}
+		
+		return $this->nonBootstrapQueries;
 	}
 }
