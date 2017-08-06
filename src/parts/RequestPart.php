@@ -102,7 +102,7 @@ class RequestPart extends PartAbstract implements PartInterface {
 		preg_match('{(?<bytes>[0-9.]+) ?(?<unit>[A-Z])}', $byteString, $match);
 		$bytes = (float) $match['bytes'];
 		
-		if (empty($match['unit'])) {
+		if (empty($match['unit']) || $match['unit'] == 'B') {
 			return $bytes;
 		}
 		
