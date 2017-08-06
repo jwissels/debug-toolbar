@@ -2,7 +2,6 @@
 
 namespace alsvanzelf\debugtoolbar\parts;
 
-use alsvanzelf\debugtoolbar\Log;
 use alsvanzelf\debugtoolbar\models\Detail;
 use alsvanzelf\debugtoolbar\models\Metric;
 use alsvanzelf\debugtoolbar\models\PartAbstract;
@@ -12,6 +11,8 @@ use alsvanzelf\debugtoolbar\models\PartInterface;
  * @todo add process() (store a processed version for easier display and re-usage between methods)
  */
 class PDOPart extends PartAbstract implements PartInterface {
+	public static $trackedQueries = [];
+	
 	public function name() {
 		return 'PDO';
 	}
@@ -20,13 +21,39 @@ class PDOPart extends PartAbstract implements PartInterface {
 		return 'PDO';
 	}
 	
+	/**
+	 * @note should be called after executing a statement
+	 *       this allows new features to get most debug information from the statement object
+	 * 
+	 * @param  \PDOStatement $statement
+	 * @param  array         $binds     needed as currently PDOStatement's debugDumpParams() doesn't include bind values
+	 *                                  @see https://bugs.php.net/bug.php?id=52384
+	 *                                  @see https://github.com/php/php-src/pull/1999
+	 */
+	public static function trackExecutedStatement(\PDOStatement $statement, array $binds=[]) {
+		self::trackQuery($statement->queryString, $binds);
+	}
+	
+	/**
+	 * @note prefer to use trackExecutedStatement() is a statement is available
+	 * 
+	 * @param  string $queryString
+	 * @param  array  $binds
+	 */
+	public static function trackQuery($queryString, array $binds=[]) {
+		self::$trackedQueries[] = [
+			'query' => $queryString,
+			'binds' => $binds,
+		];
+	}
+	
 	public static function track() {
-		if (empty(Log::$trackedPDOQueries)) {
+		if (empty(self::$trackedQueries)) {
 			return null;
 		}
 		
 		return [
-			'queries' => Log::$trackedPDOQueries,
+			'queries' => self::$trackedQueries,
 		];
 	}
 	

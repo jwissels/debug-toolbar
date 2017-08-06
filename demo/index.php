@@ -2,6 +2,8 @@
 
 use alsvanzelf\debugtoolbar\Log;
 use alsvanzelf\debugtoolbar\Toggler;
+use alsvanzelf\debugtoolbar\parts\PDOPart;
+use alsvanzelf\debugtoolbar\parts\TwigPart;
 use MongoDB\Client;
 use Monolog\Logger;
 use Monolog\Handler\MongoDBHandler;
@@ -31,7 +33,7 @@ try {
 		$statement->execute();
 		
 		// pass every executed statement
-		Log::trackPDOExecutedStatement($statement, $binds);
+		PDOPart::trackExecutedStatement($statement, $binds);
 		
 		$record = $statement->fetch(\PDO::FETCH_ASSOC);
 		$statement->closeCursor();
@@ -57,7 +59,7 @@ if ($twig->isDebug()) {
 	$profiler = new \Twig_Profiler_Profile();
 	
 	// pass the profiler once during twig setup
-	Log::trackTwigProfiler($profiler);
+	TwigPart::trackProfiler($profiler);
 	
 	$twig->addExtension(new \Twig_Extension_Profiler($profiler));
 }

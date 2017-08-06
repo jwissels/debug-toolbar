@@ -2,13 +2,14 @@
 
 namespace alsvanzelf\debugtoolbar\parts;
 
-use alsvanzelf\debugtoolbar\Log;
 use alsvanzelf\debugtoolbar\models\Detail;
 use alsvanzelf\debugtoolbar\models\Metric;
 use alsvanzelf\debugtoolbar\models\PartAbstract;
 use alsvanzelf\debugtoolbar\models\PartInterface;
 
 class TwigPart extends PartAbstract implements PartInterface {
+	public static $trackedProfiler = null;
+	
 	public function name() {
 		return 'Twig';
 	}
@@ -17,8 +18,12 @@ class TwigPart extends PartAbstract implements PartInterface {
 		return 'Twig';
 	}
 	
+	public static function trackProfiler(\Twig_Profiler_Profile $profiler) {
+		self::$trackedProfiler = $profiler;
+	}
+	
 	public static function track() {
-		$profiler = Log::$trackedTwigProfiler;
+		$profiler = self::$trackedProfiler;
 		if (empty($profiler) || empty($profiler->getProfiles())) {
 			return null;
 		}
