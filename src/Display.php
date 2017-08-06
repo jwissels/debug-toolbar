@@ -12,6 +12,7 @@ class Display {
 	
 	private $options = [
 		'collapse' => false,
+		'distUrl'  => '/dist/',
 	];
 	
 	public function __construct($log, array $options=[]) {
@@ -35,6 +36,7 @@ class Display {
 		$template = file_get_contents(__DIR__.'/templates/display.html');
 		$data     = [
 			'collapse' => $this->options['collapse'],
+			'distUrl'  => $this->options['distUrl'],
 			'log'      => $this->log,
 			'parts'    => $parts,
 		];
@@ -57,6 +59,7 @@ class Display {
 		
 		$template = file_get_contents(__DIR__.'/templates/'.$partKey.'/'.$detail->key.'.html');
 		$data     = $part->detail($detail);
+		$data['distUrl'] = $this->options['distUrl'];
 		
 		$mustache = new \Mustache_Engine();
 		$rendered = $mustache->render($template, $data);

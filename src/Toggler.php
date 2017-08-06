@@ -10,8 +10,8 @@ class Toggler {
 	private $displayUrl;
 	
 	public function __construct($logId, $scriptUrl='/dist/debug-toggler.js', $displayUrl='/debug-display.php?logId={logId}') {
-		$this->logId     = $logId;
-		$this->scriptUrl = $scriptUrl;
+		$this->logId      = $logId;
+		$this->scriptUrl  = $scriptUrl;
 		$this->displayUrl = $displayUrl;
 	}
 	

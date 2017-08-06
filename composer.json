@@ -24,6 +24,7 @@
 	},
 	"require-dev": {
 		"monolog/monolog": "^1.0",
-		"mongodb/mongodb": "^1.1"
+		"mongodb/mongodb": "^1.1",
+		"twig/twig": "^1.34"
 	}
 }
