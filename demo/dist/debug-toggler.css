@@ -1,4 +1,12 @@
 /**
+ * container
+ */
+#debugtoolbar-container,
+#debugtoolbar-container * {
+	box-sizing: content-box;
+}
+
+/**
  * display
  */
 #debugtoolbar-display {
@@ -45,7 +53,9 @@
 	height: 40px;
 	z-index: 10000;
 	
-	font-size: xx-large;
+	font-family: serif;
+	font-size: 32px;
+	line-height: 38px;
 	text-align: center;
 	cursor: pointer;
 	

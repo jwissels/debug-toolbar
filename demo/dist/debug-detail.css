@@ -1,10 +1,13 @@
 #detail {
-	margin: 25px;
-	margin-right: calc(25px + 450px);
+	margin: 25px 10px;
+	margin-right: calc(10px + 450px);
 }
 #detail-container {
 	display: none;
 }
 #detail-container.detail-active {
 	display: block;
+}
+#detail-container {
+	overflow: auto;
 }
