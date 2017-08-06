@@ -1,5 +1,5 @@
 {
-	"name": "alsvanzelf/debug-toolbar",
+	"name": "alsvanzelf/debugtoolbar",
 	"type": "library",
 	"description": "An improvement a day keeps the doctor away",
 	"keywords": ["debug"],
