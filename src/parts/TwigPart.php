@@ -28,17 +28,15 @@ class TwigPart extends PartAbstract implements PartInterface {
 			return null;
 		}
 		
-		$counts = self::countProfileTypes($profiler->getProfiles());
+		$count = self::countTemplateRenders($profiler->getProfiles());
 		$dumper = new \Twig_Profiler_Dumper_Html();
 		
 		$data = [
-			'count_templates' => $counts['template'],
-			'count_blocks'    => $counts['block'],
-			'count_macros'    => $counts['macro'],
-			'duration'        => $profiler->getDuration(),
-			'memory_current'  => self::memoryBytesToString($profiler->getMemoryUsage()),
-			'memory_peak'     => self::memoryBytesToString($profiler->getPeakMemoryUsage()),
-			'html_dump'       => $dumper->dump($profiler),
+			'render_count'   => $count,
+			'duration'       => $profiler->getDuration(),
+			'memory_current' => self::memoryBytesToString($profiler->getMemoryUsage()),
+			'memory_peak'    => self::memoryBytesToString($profiler->getPeakMemoryUsage()),
+			'html_dump'      => $dumper->dump($profiler),
 		];
 		
 		return $data;
@@ -47,9 +45,8 @@ class TwigPart extends PartAbstract implements PartInterface {
 	public function metrics() {
 		$rendersValue  = null;
 		$rendersDetail = null;
-		$allCounts     = ($this->logData->count_templates + $this->logData->count_blocks + $this->logData->count_macros);
-		if ($allCounts > 0) {
-			$rendersValue  = $this->logData->count_templates.' templates, '.$this->logData->count_blocks.' blocks, '.$this->logData->count_macros.' macros';
+		if ($this->logData->render_count > 0) {
+			$rendersValue  = $this->logData->render_count.' templates';
 			$rendersDetail = new Detail('profiler');
 		}
 		
@@ -143,22 +140,18 @@ class TwigPart extends PartAbstract implements PartInterface {
 		return $bytes . ' B';
 	}
 	
-	private static function countProfileTypes($profiles, $counts=[]) {
-		if (empty($counts)) {
-			$counts['template'] = 0;
-			$counts['block']    = 0;
-			$counts['macro']    = 0;
-		}
-		
+	private static function countTemplateRenders($profiles, $count=0) {
 		foreach ($profiles as $profile) {
-			$counts[$profile->getType()]++;
+			if ($profile->getType() == \Twig_Profiler_Profile::TEMPLATE) {
+				$count++;
+			}
 			
 			$subProfiles = $profile->getProfiles();
 			if (count($subProfiles) > 0) {
-				$counts = self::countProfileTypes($subProfiles, $counts);
+				$count = self::countTemplateRenders($subProfiles, $count);
 			}
 		}
 		
-		return $counts;
+		return $count;
 	}
 }
