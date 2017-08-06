@@ -84,7 +84,6 @@ $logId = Log::track($logger);
 /**
  * render the toggler in the template
  */
-$toggler = new Toggler($logId);
-$pageRendered = str_replace('</body>', $toggler->render().'</body>', $pageRendered);
+$pageRendered = str_replace('</body>', (new Toggler($logId))->render().'</body>', $pageRendered);
 
 echo $pageRendered;

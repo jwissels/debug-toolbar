@@ -18,7 +18,11 @@ $mongo = new Client('mongodb://127.0.0.1:27017');
 $cursor = $mongo->demo->debug->find($query=['context.logId' => $_GET['logId']]);
 $results = $cursor->toArray();
 
-$display = new Display($results[0]);
+$options = [
+	'distUrl' => '/dist/',
+];
+
+$display = new Display($results[0], $options);
 
 if (isset($_GET['detail'])) {
 	echo $display->renderDetail($_GET['detail']);
