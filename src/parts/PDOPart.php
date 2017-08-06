@@ -93,6 +93,11 @@ class PDOPart extends PartAbstract implements PartInterface {
 		$similarCount = count($similarQueries);
 		$equalCount   = count($equalQueries);
 		
+		$allAlert = null;
+		if (isset($this->options['alert_level_all_queries']) && $allCount > $this->options['alert_level_all_queries']) {
+			$allAlert = '> '.$this->options['alert_level_all_queries'].' queries';
+		}
+		
 		$similarValue = null;
 		$similarAlert = null;
 		if ($similarCount > 0) {
@@ -125,7 +130,7 @@ class PDOPart extends PartAbstract implements PartInterface {
 		}
 		
 		$metrics = [
-			new Metric('All',     $allCount.' queries', $featured=true, $alert=null, $detail),
+			new Metric('All',     $allCount.' queries', $featured=true, $allAlert, $detail),
 			new Metric('Similar', $similarValue, $featured=false, $similarAlert),
 			new Metric('Equal',   $equalValue, $featured=false, $equalAlert),
 		];

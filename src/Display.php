@@ -22,9 +22,9 @@ class Display {
 	
 	public function render() {
 		$parts = [
-			new RequestPart($this->log->extra->request),
-			new PDOPart($this->log->extra->pdo),
-			new TwigPart($this->log->extra->twig),
+			new RequestPart($this->log->extra->request, isset($this->options['request']) ? $this->options['request'] : []),
+			new PDOPart($this->log->extra->pdo,         isset($this->options['pdo'])     ? $this->options['pdo']     : []),
+			new TwigPart($this->log->extra->twig,       isset($this->options['twig'])    ? $this->options['twig']    : []),
 		];
 		
 		$options = [
@@ -52,10 +52,11 @@ class Display {
 		
 		$partKey  = strtolower($partName);
 		$partData = $this->log->extra->{$partKey};
+		$options  = isset($this->options[$partKey]) ? $this->options[$partKey] : [];
 		$detail   = new Detail($detailKey, $detailMode);
 		
 		$className = '\alsvanzelf\debugtoolbar\parts\\'.$partName.'Part';
-		$part      = new $className($partData);
+		$part      = new $className($partData, $options);
 		
 		$template = file_get_contents(__DIR__.'/templates/'.$partKey.'/'.$detail->key.'.html');
 		$data     = $part->detail($detail);

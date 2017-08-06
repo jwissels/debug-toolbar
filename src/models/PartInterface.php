@@ -6,7 +6,7 @@ namespace alsvanzelf\debugtoolbar\models;
  * @todo add addMetric()
  */
 interface PartInterface {
-	public function __construct($logData);
+	public function __construct($logData, $options=[]);
 	
 	public static function track();
 	

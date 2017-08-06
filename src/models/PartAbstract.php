@@ -6,8 +6,13 @@ namespace alsvanzelf\debugtoolbar\models;
  * @todo add addMetric()
  */
 abstract class PartAbstract {
-	public function __construct($logData) {
+	protected $logData;
+	
+	protected $options;
+	
+	public function __construct($logData, $options=[]) {
 		$this->logData = $logData;
+		$this->options = $options;
 	}
 	
 	public function isAvailable() {
