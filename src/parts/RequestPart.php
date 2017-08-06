@@ -99,8 +99,8 @@ class RequestPart extends PartAbstract implements PartInterface {
 	}
 	
 	private static function memoryStringToBytes($byteString) {
-		preg_match('{(?<bytes>[0-9]+) ?(?<unit>[A-Z])}', $byteString, $match);
-		$bytes = (int) $match['bytes'];
+		preg_match('{(?<bytes>[0-9.]+) ?(?<unit>[A-Z])}', $byteString, $match);
+		$bytes = (float) $match['bytes'];
 		
 		if (empty($match['unit'])) {
 			return $bytes;
