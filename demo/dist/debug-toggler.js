@@ -55,7 +55,7 @@ window.onload = function() {
 			event.preventDefault();
 			toggleDebugDisplay();
 		}
-		if (event.ctrlKey == false && event.altKey == false && event.shiftKey == false && event.keyCode == 27 && toggleElement.className.indexOf('debugtoolbar-toggler-active') != -1) {
+		if (event.ctrlKey == false && event.altKey == false && event.shiftKey == false && event.keyCode == 27 && toggleElement.classList.contains('debugtoolbar-toggler-active')) {
 			event.preventDefault();
 			closeDebugDisplay();
 		}
@@ -65,7 +65,7 @@ window.onload = function() {
 	 * open/extend/close display
 	 */
 	window.toggleDebugDisplay = function() {
-		if (toggleElement.className.indexOf('debugtoolbar-toggler-active') != -1) {
+		if (toggleElement.classList.contains('debugtoolbar-toggler-active')) {
 			closeDebugDisplay();
 		}
 		else {
@@ -77,17 +77,25 @@ window.onload = function() {
 			displayElement.appendChild(displayIframeElement);
 		}
 		
-		toggleElement.className = 'debugtoolbar-toggler-active debugtoolbar-toggler-sidebar';
-		displayElement.className = 'debugtoolbar-display-active debugtoolbar-display-sidebar';
+		toggleElement.classList.add('debugtoolbar-toggler-active');
+		toggleElement.classList.add('debugtoolbar-toggler-sidebar');
+		displayElement.classList.add('debugtoolbar-display-active');
+		displayElement.classList.add('debugtoolbar-display-sidebar');
 		toggleInnerElement.innerHTML = '&rsaquo;';
 	};
 	window.extendDebugDisplay = function() {
-		toggleElement.className = 'debugtoolbar-toggler-active debugtoolbar-toggler-detail';
-		displayElement.className = 'debugtoolbar-display-active debugtoolbar-display-detail';
+		toggleElement.classList.add('debugtoolbar-toggler-detail');
+		toggleElement.classList.remove('debugtoolbar-toggler-sidebar');
+		displayElement.classList.add('debugtoolbar-display-detail');
+		displayElement.classList.remove('debugtoolbar-display-sidebar');
 	}
 	window.closeDebugDisplay = function() {
-		displayElement.className = '';
-		toggleElement.className = '';
+		displayElement.classList.remove('debugtoolbar-display-active');
+		displayElement.classList.remove('debugtoolbar-display-sidebar');
+		displayElement.classList.remove('debugtoolbar-display-detail');
+		toggleElement.classList.remove('debugtoolbar-toggler-active');
+		toggleElement.classList.remove('debugtoolbar-toggler-sidebar');
+		toggleElement.classList.remove('debugtoolbar-toggler-detail');
 		toggleInnerElement.innerHTML = '&lsaquo;';
 		displayIframeElement.blur();
 		iframeCloseDebugCallback();
