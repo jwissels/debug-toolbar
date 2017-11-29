@@ -11,8 +11,9 @@ class Display {
 	private $log;
 	
 	private $options = [
-		'collapse' => false,
-		'distUrl'  => '/dist/',
+		'collapse'  => false,
+		'distUrl'   => '/dist/',
+		'vendorUrl' => null,
 	];
 	
 	public function __construct($log, array $options=[]) {
@@ -35,10 +36,11 @@ class Display {
 		];
 		$template = file_get_contents(__DIR__.'/templates/display.html');
 		$data     = [
-			'collapse' => $this->options['collapse'],
-			'distUrl'  => $this->options['distUrl'],
-			'log'      => $this->log,
-			'parts'    => $parts,
+			'collapse'  => $this->options['collapse'],
+			'distUrl'   => $this->options['distUrl'],
+			'vendorUrl' => $this->options['vendorUrl'],
+			'log'       => $this->log,
+			'parts'     => $parts,
 		];
 		
 		$mustache = new \Mustache_Engine($options);
@@ -60,7 +62,8 @@ class Display {
 		
 		$template = file_get_contents(__DIR__.'/templates/'.$partKey.'/'.$detail->key.'.html');
 		$data     = $part->detail($detail);
-		$data['distUrl'] = $this->options['distUrl'];
+		$data['distUrl']   = $this->options['distUrl'];
+		$data['vendorUrl'] = $this->options['vendorUrl'];
 		
 		$mustache = new \Mustache_Engine();
 		$rendered = $mustache->render($template, $data);

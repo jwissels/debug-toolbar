@@ -19,7 +19,8 @@ $cursor = $mongo->demo->debug->find($query=['context.logId' => $_GET['logId']]);
 $results = $cursor->toArray();
 
 $options = [
-	'distUrl' => '/dist/',
+	'distUrl'   => '/dist/',
+	'vendorUrl' => null,
 ];
 
 $display = new Display($results[0], $options);
