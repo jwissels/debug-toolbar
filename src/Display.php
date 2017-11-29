@@ -40,6 +40,7 @@ class Display {
 			'distUrl'   => $this->options['distUrl'],
 			'vendorUrl' => $this->options['vendorUrl'],
 			'log'       => $this->log,
+			'datetime'  => $this->log->datetime->toDateTime()->format('Y-m-d H:i:s'),
 			'parts'     => $parts,
 		];
 		
