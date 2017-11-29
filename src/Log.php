@@ -11,7 +11,7 @@ class Log {
 	private static $logId = null;
 	
 	public static function track(LoggerInterface $logger) {
-		self::$logId = uniqid();
+		self::$logId = !empty($_SERVER['UNIQUE_ID']) ? $_SERVER['UNIQUE_ID'] : bin2hex(random_bytes(16));
 		
 		$logger->pushProcessor(function(array $record) {
 			$record['extra']['request'] = RequestPart::track();
