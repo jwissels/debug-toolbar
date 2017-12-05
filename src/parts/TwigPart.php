@@ -8,7 +8,7 @@ use alsvanzelf\debugtoolbar\models\PartAbstract;
 use alsvanzelf\debugtoolbar\models\PartInterface;
 
 class TwigPart extends PartAbstract implements PartInterface {
-	public static $trackedProfiler = null;
+	public static $trackedProfilers = [];
 	
 	public function name() {
 		return 'Twig';
@@ -19,24 +19,40 @@ class TwigPart extends PartAbstract implements PartInterface {
 	}
 	
 	public static function trackProfiler(\Twig_Profiler_Profile $profiler) {
-		self::$trackedProfiler = $profiler;
+		self::$trackedProfilers[] = $profiler;
 	}
 	
 	public static function track() {
-		$profiler = self::$trackedProfiler;
-		if (empty($profiler) || empty($profiler->getProfiles())) {
+		$profilers = self::$trackedProfilers;
+		if (empty($profilers)) {
 			return null;
 		}
 		
-		$count = self::countTemplateRenders($profiler->getProfiles());
 		$dumper = new \Twig_Profiler_Dumper_Html();
 		
+		$renderCount   = 0;
+		$duration      = 0;
+		$memoryCurrent = 0;
+		$memoryPeak    = 0;
+		$htmlDump      = '';
+		foreach ($profilers as $profiler) {
+			if (empty($profiler->getProfiles())) {
+				continue;
+			}
+			
+			$renderCount   += self::countTemplateRenders($profiler->getProfiles());
+			$duration      += $profiler->getDuration();
+			$memoryCurrent += $profiler->getMemoryUsage();
+			$memoryPeak    += max($memoryPeak, $profiler->getPeakMemoryUsage());
+			$htmlDump      .= $dumper->dump($profiler);
+		}
+		
 		$data = [
-			'render_count'   => $count,
-			'duration'       => $profiler->getDuration(),
-			'memory_current' => self::memoryBytesToString($profiler->getMemoryUsage()),
-			'memory_peak'    => self::memoryBytesToString($profiler->getPeakMemoryUsage()),
-			'html_dump'      => $dumper->dump($profiler),
+			'render_count'   => $renderCount,
+			'duration'       => $duration,
+			'memory_current' => self::memoryBytesToString($memoryCurrent),
+			'memory_peak'    => self::memoryBytesToString($memoryPeak),
+			'html_dump'      => $htmlDump,
 		];
 		
 		return $data;
