@@ -131,12 +131,12 @@ class RequestPart extends PartAbstract implements PartInterface {
 	}
 	
 	private static function trackGit() {
-		$branches = `git branch -v --no-abbrev`;
-		preg_match('{^\* (?<branch>.+?)\s+(?<commit>[a-f0-9]{40})(?:\s|$)}m', $branches, $match);
+		$branchName = `git symbolic-ref --short HEAD`;
+		$commitHash = `git rev-parse --short HEAD`;
 		
 		return [
-			'git_branch' => isset($match['branch']) ? $match['branch'] : null,
-			'git_commit' => isset($match['commit']) ? $match['commit'] : null,
+			'git_branch' => $branchName,
+			'git_commit' => $commitHash,
 		];
 	}
 	
