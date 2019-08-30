@@ -57,7 +57,7 @@ class RequestPart extends PartAbstract implements PartInterface {
 			new Metric('Request',  $requestMethod.$this->logData->request_url.$requestType),
 			new Metric('Duration', round($this->logData->duration_total, 3).' s', $featured=true, $durationAlert),
 			new Metric('Memory',   $this->logData->memory_peak.' (peak)', $featured=true, $memoryAlert, $memoryDetail),
-			new Metric('Git',      $this->logData->git_branch.' <code>'.substr($this->logData->git_commit, 0, 7).'</code>', $featured=false, $gitAlert),
+			new Metric('Git',      $this->logData->git_branch.' <code>'.$this->logData->git_commit.'</code>', $featured=false, $gitAlert),
 		];
 		
 		return $metrics;
