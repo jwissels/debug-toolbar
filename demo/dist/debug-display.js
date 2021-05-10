@@ -26,11 +26,14 @@ if (window.parent.iframeCloseDebugCallback != undefined) {
  */
 if (parent.window.closeDebugDisplay != undefined) {
 	window.addEventListener('keydown', function(event) {
-		if (event.ctrlKey == false && event.altKey == false && event.shiftKey && event.keyCode == 68) {
+		const isShiftD = (event.ctrlKey == false && event.altKey == false && event.shiftKey && event.keyCode == 68);
+		const isEscape = (event.ctrlKey == false && event.altKey == false && event.shiftKey == false && event.keyCode == 27);
+		
+		if (isShiftD) {
 			event.preventDefault();
 			parent.window.closeDebugDisplay();
 		}
-		if (event.ctrlKey == false && event.altKey == false && event.shiftKey == false && event.keyCode == 27) {
+		if (isEscape) {
 			event.preventDefault();
 			parent.window.closeDebugDisplay();
 		}
