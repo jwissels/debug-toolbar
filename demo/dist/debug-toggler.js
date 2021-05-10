@@ -51,6 +51,11 @@ window.onload = function() {
 	 * - Escape:  close display
 	 */
 	window.addEventListener('keydown', function(event) {
+		const isInForm = (document.activeElement.nodeName === 'INPUT' || document.activeElement.nodeName === 'TEXTAREA' || document.activeElement.isContentEditable);
+		if (isInForm) {
+			return;
+		}
+		
 		const isShiftD = (event.ctrlKey == false && event.altKey == false && event.shiftKey && event.keyCode == 68);
 		const isEscape = (event.ctrlKey == false && event.altKey == false && event.shiftKey == false && event.keyCode == 27);
 		const isActive = (toggleElement.classList.contains('debugtoolbar-toggler-active'));
