@@ -18,7 +18,7 @@ class TwigPart extends PartAbstract implements PartInterface {
 		return 'Twig';
 	}
 	
-	public static function trackProfiler(\Twig_Profiler_Profile $profiler) {
+	public static function trackProfiler(/* disabled to support twig v1 - v3 \Twig\Profiler\Profile*/ $profiler) {
 		self::$trackedProfilers[] = $profiler;
 	}
 	
@@ -28,7 +28,13 @@ class TwigPart extends PartAbstract implements PartInterface {
 			return null;
 		}
 		
-		$dumper = new \Twig_Profiler_Dumper_Html();
+		// support twig v1 - v3
+		if (class_exists('\Twig_Profiler_Dumper_Html')) {
+			$dumper = new \Twig_Profiler_Dumper_Html();
+		}
+		else {
+			$dumper = new \Twig\Profiler\Dumper\HtmlDumper();
+		}
 		
 		$renderCount   = 0;
 		$duration      = 0;
@@ -157,8 +163,16 @@ class TwigPart extends PartAbstract implements PartInterface {
 	}
 	
 	private static function countTemplateRenders($profiles, $count=0) {
+		// support twig v1 - v3
+		if (class_exists('\Twig_Profiler_Profile')) {
+			$templateType = \Twig_Profiler_Profile::TEMPLATE;
+		}
+		else {
+			$templateType = \Twig\Profiler\Profile::TEMPLATE;
+		}
+		
 		foreach ($profiles as $profile) {
-			if ($profile->getType() == \Twig_Profiler_Profile::TEMPLATE) {
+			if ($profile->getType() == $templateType) {
 				$count++;
 			}
 			
