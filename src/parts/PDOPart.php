@@ -156,6 +156,7 @@ class PDOPart extends PartAbstract implements PartInterface {
 				continue;
 			}
 			
+			$record['binds'] = (array) $record['binds'];
 			array_walk($record['binds'], function(&$value, $key) {
 				$value = ['key' => $key, 'value' => var_export($value, true)];
 			});
